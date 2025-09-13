@@ -1,14 +1,9 @@
-.home {
-    height: auto;
+.hero {
     width: 100%;
-    padding-top: 150px;
-    background-color: #ff8c09;
-    color: white;
 }
 
-.hero {
+.hero-wrapper {
     gap: 100px !important;
-    padding: 20px;
 }
 
 .hero-subtitle {

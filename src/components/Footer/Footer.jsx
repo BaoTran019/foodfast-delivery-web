@@ -13,7 +13,7 @@ function Footer() {
             <img src={icon} alt="logo" className="footer-logo" />
           </div>
           <div className="col-lg-8 col-md-8 py-3">
-            <p className="logan">Let your choice bring you joy!</p>
+            <p className="logan">Fast, fresh, at your door!</p>
           </div>
         </div>
       </div>
