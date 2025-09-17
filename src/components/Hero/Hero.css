@@ -1,5 +1,7 @@
 .hero {
     width: 100%;
+    background-color: #ff8c09;
+    padding: 50px;
 }
 
 .hero-wrapper {
@@ -25,20 +27,20 @@
     object-fit: cover;
 }
 
-.btn {
+.hero-btn {
     background-color: rgb(255, 255, 255);
     color: #ff8c09;
     border-color: white !important;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-.btn:hover {
+.hero-btn:hover {
     background-color: rgba(0, 0, 0, 0);
     color: rgb(255, 255, 255);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
-.btn:active {
+.hero-btn:active {
   background-color: #ffda09 !important;
-  transform: translateY(-3px);
+  transform: translateY(-3px) !important;
 }
 
 

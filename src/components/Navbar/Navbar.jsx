@@ -12,7 +12,7 @@ function Navbar({ darkMode, setDarkMode }) {
         <nav className={`navbar navbar-expand-lg fixed-top py-3 ${darkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"}`}>
             <div className='container'>
                 {/* LOGO */}
-                <a className="navbar-brand" href="#">
+                <a className="navbar-brand" href="/">
                     <img className="img-logo" src={logo} alt="logo" />
                 </a>
 
@@ -29,8 +29,8 @@ function Navbar({ darkMode, setDarkMode }) {
                 {/* Nav menu */}
                 <div className="collapse navbar-collapse" id="collapsibleNavbar">
                     <ul className="main-menu navbar-nav me-auto ms-auto">
-                        <li className="nav-item me-3"><a className="nav-link" href="#">Home</a></li>
-                        <li className="nav-item me-3"><a className="nav-link" href="#">Menu</a></li>
+                        <li className="nav-item me-3"><a className="nav-link" href="/">Home</a></li>
+                        <li className="nav-item me-3"><a className="nav-link" href="menu">Menu</a></li>
                         <li className="nav-item me-3"><a className="nav-link" href="#">About us</a></li>
                         <li className="nav-item me-5">
                             <a className="nav-link" href="../views/account.htms"><i className="fas fa-user"></i></a>
