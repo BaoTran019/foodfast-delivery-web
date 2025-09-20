@@ -8,6 +8,7 @@ import './FoodSwiper.css'
 
 import { StoreContext } from '../../context/StoreContext';
 import Product_Card from '../Product_Card/Product_Card';
+import My_Product_Card from '../Product_Card/MY_Product_Card';
 
 
 function FoodSwiper({ category }) {
@@ -33,7 +34,7 @@ function FoodSwiper({ category }) {
       >
         {filteredList.map((food) => (
           <SwiperSlide className='swiper-slide' key={food._id}>
-            <Product_Card food={food} />
+            <My_Product_Card food={food} />
           </SwiperSlide>
         ))}
       </Swiper>
