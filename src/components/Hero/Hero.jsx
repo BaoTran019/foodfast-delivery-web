@@ -46,7 +46,7 @@ export default function Hero() {
                             initial="hidden"
                             animate="visible"
                             transition={{ duration: 0.8 }}
-                        >Order Now</motion.button>
+                        >Đặt hàng ngay</motion.button>
                     </div>
                     <div>
                         <motion.img className="hero-img" src={hero_img} alt="hero-img"

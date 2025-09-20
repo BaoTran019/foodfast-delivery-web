@@ -6,8 +6,8 @@ import icon from "../../assets/logo/Icon.png"
 
 function Footer() {
   return (
-    <footer className="text-white mt-5">
-      <div className="container mt-3 py-3 mb-2">
+    <footer className="text-white">
+      <div className="container py-3 mb-2">
         <div className="row">
           <div className="col-lg-4 col-md-4">
             <img src={icon} alt="logo" className="footer-logo" />

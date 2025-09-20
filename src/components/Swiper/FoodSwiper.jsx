@@ -26,8 +26,10 @@ function FoodSwiper({ category }) {
         modules={[Navigation, Pagination]}
         spaceBetween={25}
         slidesPerView="auto"
-        pagination={{ clickable: true }}
-        loop = {false}
+        navigation={true}
+        pagination={{ clickable: true,
+                      type: "progressbar"
+         }}
       >
         {filteredList.map((food) => (
           <SwiperSlide className='swiper-slide' key={food._id}>

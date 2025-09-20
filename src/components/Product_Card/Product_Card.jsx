@@ -7,10 +7,10 @@ function Product_Card({ food }) {
   return (
     <div className='product-card'>
       <div className='product-img-wrapper'>
-        <img className='product-img' src={food.image} alt={food.name} />
+        <img className='product-img' src={ food.image } alt={ food.name } />
       </div>
-      <h1 className='product-name'>{food.name}</h1>
-      <h2 className='product-price'>{food.price}</h2>
+      <h1 className='product-name'>{ food.name }</h1>
+      <h2 className='product-price'>{ food.price }</h2>
     </div>
   )
 }

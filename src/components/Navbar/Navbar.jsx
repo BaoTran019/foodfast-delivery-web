@@ -32,9 +32,6 @@ function Navbar({ darkMode, setDarkMode }) {
                         <li className="nav-item me-3"><a className="nav-link" href="/">Home</a></li>
                         <li className="nav-item me-3"><a className="nav-link" href="menu">Menu</a></li>
                         <li className="nav-item me-3"><a className="nav-link" href="#">About us</a></li>
-                        <li className="nav-item me-5">
-                            <a className="nav-link" href="../views/account.htms"><i className="fas fa-user"></i></a>
-                        </li>
                     </ul>
                     <ul className="user-menu navbar-nav me-2 ms-auto">
                         <li className="nav-item me-3"><a className="nav-link" href="#"><i class="bi bi-person"></i></a></li>

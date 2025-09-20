@@ -8,13 +8,26 @@
 .home-content {
     width: 100%;
     height: auto ;
-    background-image: url("../../assets/home_page/chicken_pattern_edited_2.jpg");
+    background-image: url("../../assets/home_page/1.png");
     text-align: center;
     padding-top: 80px;
+    padding-bottom: 80px;
+}
+[data-bs-theme="dark"] .home-content {
+    background-image: url("../../assets/home_page/3.png");
+    text-align: center;
 }
 
 .content-title {
     font-size: 100px;
     font-weight: bold;
     color: #ff6600;
+}
+
+/* FOR TABLE */
+@media (max-width: 992px) {
+    
+    .content-title {
+    font-size: 78px;
+}
 }

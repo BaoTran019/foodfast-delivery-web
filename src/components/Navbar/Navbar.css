@@ -13,7 +13,7 @@
     color: rgb(95, 95, 95) !important;
 }
 
-.dark-mode .nav-link {
+[data-bs-theme="dark"] .nav-link {
     color: #ff8c09 !important;
 }
 

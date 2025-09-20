@@ -8,8 +8,9 @@
     overflow: hidden;
     background-color: rgb(255, 255, 255);
     color: black;
+    z-index: -10 !important;
 }
-.dark-mode .product-card {
+[data-bs-theme="dark"] .product-card {
     background-color: #252525;
     color: white;
 
@@ -41,4 +42,5 @@
 .product-price {
     font-size: large;
     font-weight: bold;
+    margin: auto;
 }
