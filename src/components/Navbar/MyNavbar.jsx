@@ -9,6 +9,8 @@ import Navbar from 'react-bootstrap/Navbar';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import logo from "../../assets/logo/logo.png"
 
+// Import LoginModal
+import LoginModal from "../LoginModal/LoginModal";
 
 function MyNavbar({ darkMode, setDarkMode }) {
     return (
@@ -43,4 +45,4 @@ function MyNavbar({ darkMode, setDarkMode }) {
     )
 }
 
-export default MyNavbar
+export default MyNavbar;
