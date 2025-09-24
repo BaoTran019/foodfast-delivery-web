@@ -1,5 +1,6 @@
 import React from 'react'
-import "./Navbar.css";
+import { NavLink } from "react-router-dom";
+import "./MyNavbar.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Container from 'react-bootstrap/Container';
@@ -16,7 +17,7 @@ function MyNavbar({ darkMode, setDarkMode }) {
             fixed='top'
             bg={darkMode ? "dark" : "light"}
             data-bs-theme={darkMode ? "dark" : "light"}
-            className='py-3'
+            className='my-navbar py-3'
         >
             <Container>
                 <Navbar.Brand href="/">
@@ -25,14 +26,14 @@ function MyNavbar({ darkMode, setDarkMode }) {
                 <Navbar.Toggle aria-controls='navbarNav' />
                 <Navbar.Collapse>
                     <Nav className='main-menu me-auto ms-auto'>
-                        <Nav.Link className='me-3 nav-link' href='/'>Trang chủ</Nav.Link>
-                        <Nav.Link className='me-3 nav-link' href='/'>Thực đơn</Nav.Link>
-                        <Nav.Link className='me-3 nav-link' href='/'>Về chúng tôi</Nav.Link>
+                        <Nav.Link href='/'>Trang chủ</Nav.Link>
+                        <Nav.Link href='/'>Thực đơn</Nav.Link>
+                        <Nav.Link href='/'>Về chúng tôi</Nav.Link>
                     </Nav>
                     <Nav className='user-menu navbar-nav me-2 ms-auto'>
-                        <Nav.Link className='me-3 nav-link' href='#'><i className="bi bi-person"></i></Nav.Link>
-                        <Nav.Link className='me-3 nav-link' href='#'><i className="bi bi-cart"></i></Nav.Link>
-                        <Nav.Item className='me-3 d-flex align-items-center'>
+                        <Nav.Link href='#'><i className="bi bi-person"></i></Nav.Link>
+                        <Nav.Link href='#'><i className="bi bi-cart"></i></Nav.Link>
+                        <Nav.Item className='d-flex align-items-center'>
                             <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
                         </Nav.Item>
                     </Nav>

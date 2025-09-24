@@ -1,4 +1,4 @@
-.navbar {
+.my-navbar .navbar {
     /*background-color: #ff9b29;*/
     position: fixed;
     z-index: 1000;
@@ -9,15 +9,16 @@
     width: 200px;
 }
 
-.nav-link {
+.my-navbar .nav-link {
     color: rgb(95, 95, 95) !important;
+    margin-right: 1rem !important;
 }
 
 [data-bs-theme="dark"] .nav-link {
     color: #ff8c09 !important;
 }
 
-.nav-link:hover {
+.my-navbar .nav-link:hover {
     color: #ff8c09 !important;
 }
 
@@ -42,14 +43,17 @@
 
 /* FOR TABLET*/
 @media (max-width: 992px) {
-    .nav-item {
+    .my-navbar .nav-item {
         padding-left: 15px;
     }
 
-    .nav-link {
+    .my-navbar .nav-link {
         font-size: 20px !important;
     }
 
+    .main-menu {
+        margin-left: 1rem !important;
+    }
     .user-menu {
         margin-left: 1rem !important;
         display: flex !important;
@@ -75,7 +79,7 @@
         font-size: larger;
     }
 
-    .nav-link {
+    .my-navbar .nav-link {
         font-size: 18px !important;
     }
 }
