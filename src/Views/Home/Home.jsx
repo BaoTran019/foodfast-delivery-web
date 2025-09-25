@@ -16,7 +16,7 @@ export default function Home() {
 
         {/** Home page content */}
         <div className='home-content'>
-          <h1 className='content-title'>Hôm nay ăn gì !</h1>
+          <h1 className='content-title'>Hôm nay ăn gì ?</h1>
           <FoodSwiper category='Fried_Chicken'></FoodSwiper>
         </div>
       </div>
