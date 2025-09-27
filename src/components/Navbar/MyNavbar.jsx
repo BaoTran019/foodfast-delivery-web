@@ -7,48 +7,65 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
-import logo from "../../assets/logo/logo.png"
+import logo from "../../assets/logo/logo.png";
 
-// Import LoginModal
+// Import các modal
 import LoginModal from "../LoginModal/LoginModal";
+import CartAddressModal from "../CartModal/CartAddressModal";
 
 function MyNavbar({ darkMode, setDarkMode }) {
-    const [showLogin, setShowLogin] = useState(false);
-    return (
-        <>
-            <Navbar
-                expand='lg'
-                fixed='top'
-                bg={darkMode ? "dark" : "light"}
-                data-bs-theme={darkMode ? "dark" : "light"}
-                className='my-navbar py-3'
-            >
-                <Container>
-                    <Navbar.Brand href="/">
-                        <img className="img-logo" src={logo} alt="logo" />
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls='navbarNav' />
-                    <Navbar.Collapse>
-                        <Nav className='main-menu me-auto ms-auto'>
-                            <Nav.Link href='/'>Trang chủ</Nav.Link>
-                            <Nav.Link href='/'>Thực đơn</Nav.Link>
-                            <Nav.Link href='/'>Về chúng tôi</Nav.Link>
-                        </Nav>
-                        <Nav className='user-menu navbar-nav me-2 ms-auto'>
-                            <Nav.Link href='#' onClick={() => setShowLogin(true)}><i className="bi bi-person"></i></Nav.Link>
-                            <Nav.Link href='#'><i className="bi bi-cart"></i></Nav.Link>
-                            <Nav.Item className='d-flex align-items-center'>
-                                <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
-                            </Nav.Item>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
+  const [showLogin, setShowLogin] = useState(false);
+  const [showCartAddress, setShowCartAddress] = useState(false);
 
-            </Navbar >
-            {/* Login Modal */}
-            <LoginModal show={showLogin} handleClose={() => setShowLogin(false)} />
-        </>
-    )
+  return (
+    <>
+      <Navbar
+        expand='lg'
+        fixed='top'
+        bg={darkMode ? "dark" : "light"}
+        data-bs-theme={darkMode ? "dark" : "light"}
+        className='my-navbar py-3'
+      >
+        <Container>
+          <Navbar.Brand href="/">
+            <img className="img-logo" src={logo} alt="logo" />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls='navbarNav' />
+          <Navbar.Collapse id='navbarNav'>
+            <Nav className='main-menu me-auto ms-auto'>
+              <Nav.Link as={NavLink} to="/">Trang chủ</Nav.Link>
+              <Nav.Link as={NavLink} to="/">Thực đơn</Nav.Link>
+              <Nav.Link as={NavLink} to="/">Về chúng tôi</Nav.Link>
+            </Nav>
+
+            {/* Menu user (login, cart, theme) */}
+            <Nav className='user-menu navbar-nav me-2 ms-auto'>
+              {/* Nút login */}
+              <Nav.Link href='#' onClick={() => setShowLogin(true)}>
+                <i className="bi bi-person"></i>
+              </Nav.Link>
+
+              {/* Nút cart → mở modal nhập địa chỉ */}
+              <Nav.Link href='#' onClick={() => setShowCartAddress(true)}>
+                <i className="bi bi-cart"></i>
+              </Nav.Link>
+
+              {/* Nút đổi theme */}
+              <Nav.Item className='d-flex align-items-center'>
+                <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+              </Nav.Item>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
+      {/* Login Modal */}
+      <LoginModal show={showLogin} handleClose={() => setShowLogin(false)} />
+
+      {/* Cart Address Modal */}
+      <CartAddressModal show={showCartAddress} onClose={() => setShowCartAddress(false)} />
+    </>
+  )
 }
 
 export default MyNavbar;
