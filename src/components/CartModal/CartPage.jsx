@@ -1,35 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { NavLink } from "react-router-dom";
 import "./CartPage.css";
-import combo2 from "../../assets/menu/combo_2_mieng_ga_gion.jpg";
-import ga1 from "../../assets/menu/1_mieng_ga_gion.jpg";
+import { CartContext } from "../../context/CartContext";
+import { Button } from "react-bootstrap";
+import { toast, Bounce } from "react-toastify";
+
+const itemRemoveMessage = (itemName) => (
+  <div>
+    Đã xóa <span style={{ color: '#ff8c09' }}>{itemName}</span> khỏi giỏ hàng.
+  </div>
+);
 
 function CartPage() {
-  // Giỏ hàng mẫu
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Combo Gà giòn - 2 miếng", price: 55000, qty: 1, img: combo2 },
-    { id: 2, name: "1 miếng gà giòn", price: 35000, qty: 2, img: ga1 },
-  ]);
 
-  // Tăng giảm số lượng
-  const updateQty = (id, delta) => {
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, qty: Math.max(1, item.qty + delta) } : item
-      )
-    );
-  };
+  const { cartItems, updateQuantity, removeFromCart, removeAllItems } = useContext(CartContext)
 
-  // Xóa món ăn
-  const removeItem = (id) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
+  const handleRemoveItem = (item) => {
+    removeFromCart(item.id)
+    toast.warning(itemRemoveMessage(item.name))
+  }
 
-  // Tính tổng tiền
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const handleRemoveAll = () => {
+    removeAllItems();
+    if (cartItems.length === 0) {
+      toast.warning('Giỏ hàng chưa có sản phầm')
+    }
+    else {
+      toast.warning('Đã xóa tất cả khỏi giỏ hàng')
+    }
+  }
+
+  const handleQty = (id, delta) => {
+    updateQuantity(id, delta)
+  }
+
+  // Get Total
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  console.log("Cart list", cartItems)
 
   return (
     <div className="cart-page">
-      <div className="cart-container">
+      <div className="cart-container" style={{ marginTop: '4vh' }}>
         <h2 className="cart-title">🛒 Giỏ hàng của bạn</h2>
 
         {cartItems.length === 0 ? (
@@ -38,24 +50,24 @@ function CartPage() {
           <div className="cart-items">
             {cartItems.map(item => (
               <div className="cart-item" key={item.id}>
-                <img src={item.img} alt={item.name} className="cart-img" />
+                <img src={item.image} alt={item.name} className="cart-img" />
                 <div className="cart-info">
                   <h4>{item.name}</h4>
-                  <p>{item.price.toLocaleString()} VND</p>
+                  <p>{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(item.price)}</p>
                   <div className="qty-controls">
-                    <button onClick={() => updateQty(item.id, -1)}>-</button>
-                    <span>{item.qty}</span>
-                    <button onClick={() => updateQty(item.id, 1)}>+</button>
+                    <button onClick={() => handleQty(item.id, -1)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => handleQty(item.id, 1)}>+</button>
                   </div>
-                  <button 
-                    className="remove-btn" 
-                    onClick={() => removeItem(item.id)}
+                  <button
+                    className="remove-btn"
+                    onClick={() => handleRemoveItem(item)}
                   >
                     Xóa
                   </button>
                 </div>
                 <div className="cart-subtotal">
-                  {(item.price * item.qty).toLocaleString()} VND
+                  {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(item.price * item.quantity)}
                 </div>
               </div>
             ))}
@@ -63,8 +75,10 @@ function CartPage() {
         )}
 
         <div className="cart-summary">
-          <h3>Tổng cộng: {total.toLocaleString()} VND</h3>
-          <button className="checkout-btn">Tiếp tục đặt hàng</button>
+          <h3>Tổng cộng: <span style={{ color: '#ff8800ff', fontWeight:'bold'}}>{total.toLocaleString()} VND</span></h3>
+          <Button className="remove-all-btn" onClick={handleRemoveAll}>Xóa tất cả</Button>
+          <Button as={NavLink} to="/menu" className="cart-summary__btn-continue" onClick={() => window.scrollTo(0, 0)}>Tiếp tục chọn món</Button>
+          <Button as={NavLink} to="/checkout" className="cart-summary__btn-checkout">Đặt hàng</Button>
         </div>
       </div>
     </div>
