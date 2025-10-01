@@ -1,12 +1,53 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { NavLink } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import './ProductModal.css'
+import { CartContext } from '../../context/CartContext';
+import { toast, Bounce } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+/* Notify Message */
+const notifyMessage = (foodName, quantity) => (
+    <div>
+        <div>
+            Đã thêm <span style={{ color: '#00b700ff' }}>{quantity} phần</span> <span style={{ color: '#ff8c09' }}>{foodName}</span> vào giỏ hàng
+        </div>
+        <Button as={NavLink} to="/cart"
+            style={{ marginTop: '0.7rem' }}
+            onClick={() => window.scrollTo(0, 0)}
+            >Đến giỏ hảng</Button>
+    </div>
+);
+
+/* Notify when add to cart success */
+const addToCartNotify = (food, quantity) => {
+    toast.success(notifyMessage(food.name, quantity), {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+    });
+};
+
 
 function ProductModal({ show, handleCloseModal, food }) {
 
     const [quantity, setQuantity] = useState(1); // default quantity = 1
+    const { addToCart } = useContext(CartContext);
+
+    const handleAdd = () => {
+        addToCart(food, quantity); // thêm món + số lượng
+        addToCartNotify(food, quantity);
+        handleCloseModal();                 // đóng modal
+    };
+
 
     // to reset quantity to 1 when closing modal
     useEffect(() => {
@@ -62,7 +103,7 @@ function ProductModal({ show, handleCloseModal, food }) {
                                 className='set-quantity-zone'
                                 style={{ display: "flex", alignItems: "center" }}>
                                 <Button
-                                    style={{ background: "#ff8c09", border: "1px solid #ff8c09", width:"3rem" }}
+                                    style={{ background: "#ff8c09", border: "1px solid #ff8c09", width: "3rem" }}
                                     size='md'
                                     onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
                                 >
@@ -73,10 +114,10 @@ function ProductModal({ show, handleCloseModal, food }) {
                                     type="text"
                                     readOnly
                                     value={quantity}
-                                    style={{fontSize:"large", textAlign: "center" }}
+                                    style={{ fontSize: "large", textAlign: "center" }}
                                 />
                                 <Button
-                                    style={{ background: "#ff8c09", border: "1px solid #ff8c09", width:"3rem"  }}
+                                    style={{ background: "#ff8c09", border: "1px solid #ff8c09", width: "3rem" }}
                                     size='md'
                                     onClick={() => setQuantity((prev) => prev + 1)}
                                 >
@@ -88,6 +129,7 @@ function ProductModal({ show, handleCloseModal, food }) {
 
                     <Modal.Footer>  {/* Footer */}
                         <Button
+                            onClick={handleAdd}
                             style={{ background: "#ff8c09", border: "1px solid #ff8c09", fontSize: "larger" }}>
                             Thêm vào giỏ hàng
                         </Button>

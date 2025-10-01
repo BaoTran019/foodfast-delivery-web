@@ -5,7 +5,7 @@ import food_6 from './menu/combo_2_mieng_ga_gion.jpg'
 
 export const food_list = [
     {
-        _id: "1",
+        id: "1",
         name: "Combo Gà giòn - 1 miếng",
         image: food_5,
         price: 55000,
@@ -13,7 +13,7 @@ export const food_list = [
         category: "Fried_Chicken"
     },
     {
-        _id: "2",
+        id: "2",
         name: "Combo Gà giòn - 2 miếng",
         image: food_6,
         price: 55000,
@@ -21,7 +21,7 @@ export const food_list = [
         category: "Fried_Chicken"
     },
     {
-        _id: "3",
+        id: "3",
         name: "1 miếng gà giòn",
         image: food_1,
         price: 35000,
@@ -29,7 +29,7 @@ export const food_list = [
         category: "Fried_Chicken"
     },
     {
-        _id: "4",
+        id: "4",
         name: "3 miếng gà giòn",
         image: food_2,
         price: 100000,
@@ -37,7 +37,7 @@ export const food_list = [
         category: "Fried_Chicken"
     },
     {
-        _id: "5",
+        id: "5",
         name: "6 miếng gà giòn",
         image: food_2,
         price: 200000,
@@ -45,7 +45,7 @@ export const food_list = [
         category: "Fried_Chicken"
     },
     {
-        _id: "6",
+        id: "6",
         name: "9 miếng gà giòn",
         image: food_2,
         price: 300000,

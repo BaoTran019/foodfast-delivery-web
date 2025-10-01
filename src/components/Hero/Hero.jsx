@@ -1,4 +1,6 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 import "./Hero.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -41,12 +43,16 @@ export default function Hero() {
                             animate="visible"
                             transition={{ duration: 0.6 }}
                         >Freshly cooked and delivered in minutes</motion.p>{/* Đang ảnh hưởng đển div -> cần thu ngắn p lại */}
-                        <motion.button className="btn btn-primary btn-lg mt-3 hero-btn"
-                            variants={fadeInLeft}
+                        <motion variants={fadeInLeft}
                             initial="hidden"
                             animate="visible"
-                            transition={{ duration: 0.8 }}
-                        >Đặt hàng ngay</motion.button>
+                            transition={{ duration: 0.8 }}>
+                            <Button className="btn btn-primary btn-lg mt-3 hero-btn"
+                                as={NavLink} to='/menu'
+                                onClick={() => window.scrollTo(0, 0)}>
+                                Đặt hàng ngay
+                            </Button>
+                        </motion>
                     </div>
                     <div>
                         <motion.img className="hero-img" src={hero_img} alt="hero-img"
@@ -58,7 +64,7 @@ export default function Hero() {
                             }} />
                     </div>
                 </div>
-            </section>
+            </section >
         </>
     )
 }

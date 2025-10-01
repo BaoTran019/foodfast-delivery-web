@@ -27,30 +27,30 @@ function MyNavbar({ darkMode, setDarkMode }) {
         className='my-navbar py-3'
       >
         <Container>
-          <Navbar.Brand href="/">
+          <Navbar.Brand as={NavLink} to="/">
             <img className="img-logo" src={logo} alt="logo" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='navbarNav' />
           <Navbar.Collapse id='navbarNav'>
             <Nav className='main-menu me-auto ms-auto'>
-              <Nav.Link as={NavLink} to="/">Trang chủ</Nav.Link>
-              <Nav.Link as={NavLink} to="/">Thực đơn</Nav.Link>
-              <Nav.Link as={NavLink} to="/">Về chúng tôi</Nav.Link>
+              <Nav.Link as={NavLink} to="/" onClick={() => window.scrollTo(0, 0)}>Trang chủ</Nav.Link>
+              <Nav.Link as={NavLink} to="/menu" onClick={() => window.scrollTo(0, 0)}>Thực đơn</Nav.Link>
+              <Nav.Link as={NavLink} to="/" onClick={() => window.scrollTo(0, 0)}>Về chúng tôi</Nav.Link>
             </Nav>
 
             {/* Menu user (login, cart, theme) */}
             <Nav className='user-menu navbar-nav me-2 ms-auto'>
-              {/* Nút login */}
+              {/* Login Button */}
               <Nav.Link href='#' onClick={() => setShowLogin(true)}>
                 <i className="bi bi-person"></i>
               </Nav.Link>
 
-              {/* Nút cart → mở modal nhập địa chỉ */}
-              <Nav.Link href='#' onClick={() => setShowCartAddress(true)}>
+              {/*Cart Button */}
+              <Nav.Link as={NavLink} to='/cart' onClick={() => window.scrollTo(0, 0)}>
                 <i className="bi bi-cart"></i>
               </Nav.Link>
 
-              {/* Nút đổi theme */}
+              {/* Dark-mode Theme Button */}
               <Nav.Item className='d-flex align-items-center'>
                 <ThemeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
               </Nav.Item>

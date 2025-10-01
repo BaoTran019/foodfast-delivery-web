@@ -1,0 +1,32 @@
+.menu {
+    background-image: url("../../assets/home_page/1.png");
+}
+
+[data-bs-theme="dark"] .menu {
+    background-image: url("../../assets/home_page/3.png");
+}
+
+.filter-icon {
+    height: 18vh;
+    width: auto;
+    background-color: #ff8c09db;
+    border-radius: 50rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.filter-icon:hover{
+    transform: translateY(-7px);
+    box-shadow: 0 8px 15px rgba(255, 187, 0, 0.74);
+    transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .filter-icon {
+    background-color: #ff8c09;
+}
+
+@media (max-width: 992px){
+    .filter-icon {
+        width: 20vw;
+        height: auto;
+    }
+}
