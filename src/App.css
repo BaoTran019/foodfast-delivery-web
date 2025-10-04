@@ -13,10 +13,14 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
-
 .read-the-docs {
   color: #888;
+}
+
+.app {
+    background-image: url("./assets/home_page/1.png");
+}
+
+.app[data-bs-theme="dark"] {
+    background-image: url("./assets/home_page/3.png");
 }

@@ -3,7 +3,7 @@ import "./Home.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Hero from '../../components/Hero/Hero';
-import FoodSwiper from '../../components/Swiper/FoodSwiper';
+import FoodSwiper from '../../Menu/components/Swiper/FoodSwiper';
 import { Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 

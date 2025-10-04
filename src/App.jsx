@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import Home from "./Views/Home/Home";
-import Menu from './Views/Menu/Menu';
+import Menu from './Menu/Menu';
+import CartPage from './Cart/CartPage';
 import Footer from "./components/Footer/Footer";
 import MyNavbar from "./components/Navbar/MyNavbar";
-import CartPage from "./components/CartModal/CartPage";
-import Product_Card from './components/Product_Card/Product_Card';
+import Product_Card from './Menu/components/Product_Card/Product_Card';
 import { ToastContainer } from "react-toastify";
+import './App.css'
+
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
 
   return (
-        <div className='app' data-bs-theme={darkMode ? "dark" : "light"}>
+    <div className='app' data-bs-theme={darkMode ? "dark" : "light"}>
       <MyNavbar darkMode={darkMode} setDarkMode={setDarkMode} />
       <Routes>
         <Route path="/" element={<Home />} />
