@@ -6,9 +6,9 @@ import "swiper/css/pagination";
 import { Navigation, Pagination } from "swiper/modules";
 import './FoodSwiper.css'
 
-import { StoreContext } from '../../context/StoreContext';
+import { StoreContext } from '../../../context/StoreContext';
 import Product_Card from '../Product_Card/Product_Card';
-import My_Product_Card from '../Product_Card/MY_Product_Card';
+import My_Product_Card from '../Product_Card/My_Product_Card';
 
 
 function FoodSwiper({ category }) {

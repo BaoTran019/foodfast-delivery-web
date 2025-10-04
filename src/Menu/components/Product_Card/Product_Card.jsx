@@ -1,6 +1,6 @@
 import React from 'react'
 import './Product_Card.css'
-import img from '../../assets/menu/1_mieng_ga_gion.jpg'
+//import img from '../../assets/menu/1_mieng_ga_gion.jpg'
 
 function Product_Card({ food }) {
   if (!food) return null; // ⛑ tránh crash nếu bị undefined

@@ -1,21 +1,16 @@
 .home {
     height: auto;
     width: 100%;
-    padding-top: 118px;
+    padding-top: 117px;
     color: white;
 }
 
 .home-content {
     width: 100%;
     height: auto ;
-    background-image: url("../../assets/home_page/1.png");
     text-align: center;
     padding-top: 10vh;
     padding-bottom: 10vh;
-}
-[data-bs-theme="dark"] .home-content {
-    background-image: url("../../assets/home_page/3.png");
-    text-align: center;
 }
 
 .content-title {

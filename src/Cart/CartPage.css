@@ -1,16 +1,12 @@
 .cart-page {
   min-height: 100vh;
   font-family: "Segoe UI", sans-serif;
-  background-image: url("../../assets/home_page/1.png"); /* đặt ảnh nền ở đây */
   background-size: cover;
   background-position: center;
   padding: 100px 20px 40px;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-}
-[data-bs-theme="dark"] .cart-page {
-  background-image: url("../../assets/home_page/3.png");
 }
 
 .cart-container {
@@ -51,13 +47,13 @@
 .cart-item {
   display: flex;
   align-items: center;
-  background: #fafafa;
+  background: #f8f8f8;
   border-radius: 12px;
   padding: 15px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 [data-bs-theme="dark"] .cart-item {
-  background: rgb(84, 84, 84)
+  background: rgb(55, 55, 55)
 }
 
 .cart-img {

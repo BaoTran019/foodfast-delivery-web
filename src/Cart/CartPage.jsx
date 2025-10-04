@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import "./CartPage.css";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "../context/CartContext";
 import { Button } from "react-bootstrap";
 import { toast, Bounce } from "react-toastify";
 
@@ -78,7 +78,7 @@ function CartPage() {
           <h3>Tổng cộng: <span style={{ color: '#ff8800ff', fontWeight:'bold'}}>{total.toLocaleString()} VND</span></h3>
           <Button className="remove-all-btn" onClick={handleRemoveAll}>Xóa tất cả</Button>
           <Button as={NavLink} to="/menu" className="cart-summary__btn-continue" onClick={() => window.scrollTo(0, 0)}>Tiếp tục chọn món</Button>
-          <Button as={NavLink} to="/checkout" className="cart-summary__btn-checkout">Đặt hàng</Button>
+          <Button as={NavLink} to="/checkout" className="cart-summary__btn-checkout">Thanh toán</Button>
         </div>
       </div>
     </div>

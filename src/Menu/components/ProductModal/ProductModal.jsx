@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Modal, Button, Row, Col, Form } from "react-bootstrap";
 import './ProductModal.css'
-import { CartContext } from '../../context/CartContext';
+import { CartContext } from '../../../context/CartContext';
 import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
