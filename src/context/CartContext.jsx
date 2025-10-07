@@ -1,52 +1,97 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
+import {
+  getCart,
+  addToCartApi,
+  updateQuantityApi,
+  removeItemApi,
+  clearCartApi
+} from "../api/cartAPI";
 
 export const CartContext = createContext();
 
 function CartProvider({ children }) {
+  const [cart, setCart] = useState({ cartItems: [], totalPrice: 0 });
+  const [loading, setLoading] = useState(true);
+  const userId = localStorage.getItem("userId");
 
-    const [cartItems, setCartItems] = useState([])
-
-    const addToCart = (food, quantity) => {
-        setCartItems(prev => {
-            // Check if item is existed
-            const existing = prev.find(item => item.id === food.id);
-            if (existing) {
-                // If existed -> increase quantity
-                return prev.map(item =>
-                    item.id === food.id
-                        ? {
-                            ...item, quantity: item.quantity + quantity
-                        } : item
-                );
-            } else {
-                return [...prev, { ...food, quantity }];
-            }
-        });
+  useEffect(() => {
+    const fetchCartData = async () => {
+      if (!userId) return setLoading(false);
+      try {
+        const data = await getCart(userId);
+        setCart(data || { cartItems: [], totalPrice: 0 });
+      } catch (err) {
+        console.error("❌ Lỗi load cart:", err);
+        toast.error(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
+    fetchCartData();
+  }, [userId]);
 
-    // Tăng giảm số lượng
-    const updateQuantity = (id, delta) => {
-        setCartItems(items =>
-            items.map(item =>
-                item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
-            )
-        );
-    };
+  const addToCart = async (food, quantity) => {
+    try {
+      const updatedCart = await addToCartApi(userId, food.id, quantity);
+      setCart(updatedCart);
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
 
-    const removeFromCart = (foodId) => {
-        setCartItems(prev => prev.filter(item => item.id !== foodId));
-    };
+  const updateQuantity = async (productId, delta) => {
+    try {
+      const updated = await updateQuantityApi(userId, productId, delta);
+      setCart(updated || { cartItems: [], totalPrice: 0 });
+    } catch (err) {
+      console.error("❌ Lỗi updateQuantity:", err.message);
+      toast.error(err.message);
+    }
+  };
 
-    const removeAllItems = () => setCartItems([])
+  const removeFromCart = async (productId) => {
+    try {
+      await removeItemApi(userId, productId);
+      setCart((prev) => ({
+        ...prev,
+        cartItems: prev.cartItems.filter(i => i.productId !== productId),
+        totalPrice:
+          prev.totalPrice -
+          prev.cartItems.find(i => i.productId === productId).price *
+          prev.cartItems.find(i => i.productId === productId).quantity
+      }));
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message);
+    }
+  };
 
-    const getSubTotal = (price, quantity) => price * quantity;
+  const removeAllItems = async () => {
+    try {
+      await clearCartApi(userId);
+      setCart({ cartItems: [], totalPrice: 0 });
+    } catch (err) {
+      console.error(err);
+      toast.error(err.message);
+    }
+  };
 
-    return (
-        <CartContext.Provider
-            value={{ cartItems, addToCart, updateQuantity, removeFromCart, getSubTotal, removeAllItems }}>
-            {children}
-        </CartContext.Provider>
-    )
+  return (
+    <CartContext.Provider
+      value={{
+        cart,
+        loading,
+        addToCart,
+        updateQuantity,
+        removeFromCart,
+        removeAllItems,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 }
 
-export default CartProvider
+export default CartProvider;

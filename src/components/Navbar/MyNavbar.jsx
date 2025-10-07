@@ -10,7 +10,7 @@ import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import logo from "../../assets/logo/logo.png";
 
 // Import các modal
-import LoginModal from "../LoginModal/LoginModal";
+import LoginModal from "../../Login/LoginModal/LoginModal";
 import CartAddressModal from "../CartModal/CartAddressModal";
 
 function MyNavbar({ darkMode, setDarkMode }) {

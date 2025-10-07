@@ -42,11 +42,10 @@ function ProductModal({ show, handleCloseModal, food }) {
     const [quantity, setQuantity] = useState(1); // default quantity = 1
     const { addToCart } = useContext(CartContext);
 
-    const handleAdd = () => {
-        addToCart(food, quantity); // thêm món + số lượng
-        addToCartNotify(food, quantity);
-        handleCloseModal();                 // đóng modal
-    };
+    const handleAdd = async () => {
+    addToCart(food, quantity)
+    addToCartNotify(food, quantity)
+  };
 
 
     // to reset quantity to 1 when closing modal
