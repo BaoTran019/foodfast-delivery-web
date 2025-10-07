@@ -9,18 +9,18 @@ import vnpayLogo from '../assets/checkout/vnpay.jpg'
 import cash from '../assets/checkout/money.png'
 
 function CheckoutPage() {
-  const { cartItems } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
 
   // Get Total
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cart.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   useEffect(() => {
-    if (cartItems.length === 0) {
+    if (cart.cartItems.length === 0) {
       toast.error("Giỏ hàng chưa có sản phẩm để thanh toán");
     }
-  }, [cartItems]);
+  }, [cart.cartItems]);
 
-  if (cartItems.length === 0) {
+  if (cart.cartItems.length === 0) {
     return <Navigate to="/menu" replace />; // chuyển hướng về trang menu
   }
 
@@ -96,7 +96,7 @@ function CheckoutPage() {
               </span>
             </p>
 
-            {cartItems.map((food) => (
+            {cart.cartItems.map((food) => (
               <CartItem item={food}></CartItem>
             ))}
           </div>

@@ -13,16 +13,25 @@ const itemRemoveMessage = (itemName) => (
 
 function CartPage() {
 
-  const { cartItems, updateQuantity, removeFromCart, removeAllItems } = useContext(CartContext)
+  const {
+    cart,
+    loading,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    removeAllItems,
+  } = useContext(CartContext);
+  if (loading) return <p>Đang tải giỏ hàng...</p>;
+  if (!cart) return <p>Không tìm thấy giỏ hàng</p>;
 
   const handleRemoveItem = (item) => {
-    removeFromCart(item.id)
-    toast.warning(itemRemoveMessage(item.name))
+    removeFromCart(item.productId)
+    toast.warning(itemRemoveMessage(item.productName))
   }
 
   const handleRemoveAll = () => {
     removeAllItems();
-    if (cartItems.length === 0) {
+    if (cart.cartItems.length === 0) {
       toast.warning('Giỏ hàng chưa có món ăn')
     }
     else {
@@ -37,29 +46,29 @@ function CartPage() {
   const handleWarning = () => toast.error('Giỏ hảng bạn chưa có món ăn')
 
   // Get Total
-  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cart.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  console.log("Cart list", cartItems)
+  console.log("Cart list", cart.cartItems)
 
   return (
     <div className="cart-page">
       <div className="cart-container" style={{ marginTop: '4vh' }}>
         <h2 className="cart-title">🛒 Giỏ hàng của bạn</h2>
 
-        {cartItems.length === 0 ? (
+        {cart.cartItems.length === 0 ? (
           <p>Giỏ hàng đang trống.</p>
         ) : (
           <div className="cart-items">
-            {cartItems.map(item => (
-              <div className="cart-item" key={item.id}>
-                <img src={item.image} alt={item.name} className="cart-img" />
+            {cart.cartItems.map(item => (
+              <div className="cart-item" key={item.productId}>
+                <img src={item.imageUrl} alt={item.productName} className="cart-img" />
                 <div className="cart-info">
                   <h4>{item.name}</h4>
                   <p>{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(item.price)}</p>
                   <div className="qty-controls">
-                    <button onClick={() => handleQty(item.id, -1)}>-</button>
+                    <button onClick={() => handleQty(item.productId, -1)}>-</button>
                     <span>{item.quantity}</span>
-                    <button onClick={() => handleQty(item.id, 1)}>+</button>
+                    <button onClick={() => handleQty(item.productId, 1)}>+</button>
                   </div>
                   <button
                     className="remove-btn"
@@ -84,7 +93,7 @@ function CartPage() {
           </h3>
           <Button className="remove-all-btn" onClick={handleRemoveAll}>Xóa tất cả</Button>
           <Button as={NavLink} to="/menu" className="cart-summary__btn-continue" onClick={() => window.scrollTo(0, 0)}>Tiếp tục chọn món</Button>
-          {cartItems.length !== 0 ? (
+          {cart.cartItems.length !== 0 ? (
             <Button as={NavLink} to="/checkout" className="cart-summary__btn-checkout">Thanh toán</Button>)
             : (<Button className="cart-summary__btn-checkout" onClick={handleWarning}>Thanh toán</Button>)}
         </div>
