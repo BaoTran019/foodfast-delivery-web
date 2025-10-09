@@ -29,34 +29,34 @@ All icons used in this repository are **sourced from [Flaticon](https://www.flat
 ## 🖼️ Demo Screenshots
 
 ### Home page
-![Home page](./src/previews/homepage.png)
+![Home page](./previews/homepage.png)
 #### Dark-theme Home page
-![Dark-theme Home page](./src/previews/dark-modehomepage.png)
+![Dark-theme Home page](./previews/dark-modehomepage.png)
 
 ### Menu
 #### Menu Page
-![Menu page](./src/previews/menu-all.png)
+![Menu page](./previews/menu-all.png)
 #### Fried Chickens filtering
-![Menu chickens filtering ](./src/previews/menu-chickens.png)
+![Menu chickens filtering ](./previews/menu-chickens.png)
 #### Spaghetti filtering
-![Menu spaghetti filtering](./src/previews/menu-spaghetti.png)
+![Menu spaghetti filtering](./previews/menu-spaghetti.png)
 #### Drinks filtering
-![Menu drinks filtering](./src/previews/menu-drinks.png)
+![Menu drinks filtering](./previews/menu-drinks.png)
 #### Dark-theme Menu Page
-![Dark-theme Menu page](./src/previews/dark-mode-menu.png)
+![Dark-theme Menu page](./previews/dark-mode-menu.png)
 
 ### Cart
 #### Item Modal
-![Item Modal](./src/previews/add-item-to-cart.png)
+![Item Modal](./previews/add-item-to-cart.png)
 #### Cart page
-![Cart](./src/previews/cart.png)
+![Cart](./previews/cart.png)
 #### Dark-theme Cart page
-![Dark-theme Cart](./src/previews/dark-mode-cart.png)
+![Dark-theme Cart](./previews/dark-mode-cart.png)
 
 ### Checkout
 #### Checkout page
-![Checkout page](./src/previews/checkout.png)
+![Checkout page](./previews/checkout.png)
 #### Dark-theme Checkout page
-![Dark-theme Checkout page](./src/previews/cart.png)
+![Dark-theme Checkout page](./previews/cart.png)
 
 
