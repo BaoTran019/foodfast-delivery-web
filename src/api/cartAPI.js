@@ -16,7 +16,7 @@ export const addToCartApi = async (userId, foodId, quantity) => {
     headers: { "Content-Type": "application/json" },
   });
   if (!res.ok) throw new Error("Thêm vào giỏ hàng thất bại");
-  return res.json();
+  return res.json(); 
 };
 
 export const updateQuantityApi = async (userId, productId, delta) => {

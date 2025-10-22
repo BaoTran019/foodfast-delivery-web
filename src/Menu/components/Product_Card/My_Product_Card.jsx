@@ -18,14 +18,16 @@ function My_Product_Card({ food }) {
                 <div className='body-wrapper'>
                     <Card.Body>
                         <Card.Title className='card-title'>{food.name}</Card.Title>
-                        <Card.Text className='card-text'>{food.price}</Card.Text>
+                        <Card.Text className='card-text'>
+                            {new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(food.price)}
+                        </Card.Text>
                     </Card.Body>
                 </div>
             </Card>
             <ProductModal
-            show={open}
-            handleCloseModal={setOpen}
-            food={food}></ProductModal>
+                show={open}
+                handleCloseModal={setOpen}
+                food={food}></ProductModal>
         </>
     )
 }

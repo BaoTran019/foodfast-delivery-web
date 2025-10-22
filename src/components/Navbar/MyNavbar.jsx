@@ -21,16 +21,10 @@ function MyNavbar({ darkMode, setDarkMode }) {
   const [showCartAddress, setShowCartAddress] = useState(false);
 
   const { auth } = useContext(AuthContext)
+  console.log("Auth context:", auth);
 
   const handleUserIconClick = () => {
-    if (!auth.userId){
-      setShowProfile(false)
-      setShowLogin(true)
-    }
-    else {
-      setShowLogin(false)
-      setShowProfile(true)
-    }
+    setShowLogin(true)
   }
 
   return (
@@ -51,15 +45,23 @@ function MyNavbar({ darkMode, setDarkMode }) {
             <Nav className='main-menu me-auto ms-auto'>
               <Nav.Link as={NavLink} to="/" onClick={() => window.scrollTo(0, 0)}>Trang chủ</Nav.Link>
               <Nav.Link as={NavLink} to="/menu" onClick={() => window.scrollTo(0, 0)}>Thực đơn</Nav.Link>
-              <Nav.Link as={NavLink} to="/" onClick={() => window.scrollTo(0, 0)}>Về chúng tôi</Nav.Link>
+              <Nav.Link as={NavLink} to="/profile" onClick={() => window.scrollTo(0, 0)}>Đơn hàng của bạn</Nav.Link>
             </Nav>
 
             {/* Menu user (login, cart, theme) */}
             <Nav className='user-menu navbar-nav me-2 ms-auto'>
               {/* Login Button */}
-              <Nav.Link href='#' onClick={() => handleUserIconClick()}>
-                <i className="bi bi-person"></i>
-              </Nav.Link>
+              {auth.userId ? (
+                <Nav.Link as={NavLink} to="/profile" onClick={() => window.scrollTo(0, 0)}>
+                  <i className="bi bi-person"></i>
+                </Nav.Link>
+               ) : (
+                <Nav.Link href='#' onClick={() => handleUserIconClick()}>
+                  <i className="bi bi-person"></i>
+                </Nav.Link>
+              )
+            }
+
 
               {/*Cart Button */}
               <Nav.Link as={NavLink} to='/cart' onClick={() => window.scrollTo(0, 0)}>

@@ -24,3 +24,41 @@ export const logIn = async (phone, password) => {
 
     return data
 }
+
+export const register = async (info) => {
+    const res = await fetch(`${BASE_URL}/register`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(info)
+    })
+    
+    if (!res.ok) {
+        const errMsg = await res.text();
+        throw new Error(errMsg || "Không thể tạo tài khoản");
+      }
+}
+
+export const resetPassword = async (forgotPhone) => {
+    const res = await fetch(`${BASE_URL}/forgot-password`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ forgotPhone })
+    })
+    
+    if (!res.ok) {
+        const errMsg = await res.text();
+        throw new Error(errMsg || 'Không thể gửi mã khôi phục');
+      }
+}
+
+export const verifyOTP = async (phone, otp) => {
+    const res =await fetch (`${BASE_URL}/verify-otp`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone, otp })
+    })
+    if (!res.ok) {
+        const errMsg = await res.text();
+        throw new Error(errMsg || 'Không thể xác minh otp');
+      }
+}

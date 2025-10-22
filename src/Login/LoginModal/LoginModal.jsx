@@ -4,30 +4,80 @@ import "./LoginModal.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import logo from "../../assets/logo/logo.png";
 import { AuthContext } from "../../context/AuthenticationContext"
+import { register, resetPassword, verifyOTP } from "../../api/authenticationAPI";
 import { toast } from "react-toastify";
 
 function LoginModal({ show, handleClose }) {
 
-  const { auth, logIn } = useContext(AuthContext)
-  const [phone, setPhone] = useState('')
-  const [password, setPassword] = useState('')
+  const { logIn } = useContext(AuthContext)
+  const [login_data, setLogin] = useState({
+    phone: '',
+    password: ''
+  })
+
+  const [register_info, setRegister] = useState({
+    userName: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+    address: ''
+  })
+
+  const [resetPsw, setResetPsw] = useState({
+    phone: '',
+    otp: ''
+  })
+
   const [showPassword, setShowPassword] = useState(false);
 
   const [formType, setFormType] = useState("login"); // login | forgot | register
 
-  const switchToForgot = () => setFormType("forgot");
-  const switchToLogin = () => setFormType("login");
-  const switchToRegister = () => setFormType("register");
+  const switchToForm = (type) => {
+    setFormType(type)
+  }
 
   const handleLogIn = async (e) => {
     e.preventDefault()
     try {
-      await logIn(phone, password)
+      await logIn(login_data.phone, login_data.password)
       toast.success('Đăng nhập thành công')
     } catch (err) {
       toast.warning('Đăng nhập thất bại')
     }
     handleClose();
+  }
+
+  const handleRegister = async (e) => {
+    e.preventDefault()
+    console.log(register_info)
+    try {
+      await register(register_info)
+      toast.success('Đăng kí thành công')
+      setFormType('login')
+    } catch (err) {
+      toast.warning('Đăng kí thất bại')
+    }
+  }
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault()
+    try {
+      await resetPassword(resetPsw.phone)
+      setFormType('otp')
+    } catch (err) {
+      toast.warning(err.toString())
+    }
+  }
+
+  const handleVerifyOTP = async (e) => {
+    e.preventDefault()
+    try {
+      await verifyOTP(resetPsw.phone, resetPsw.otp)
+      setFormType('reset')
+    } catch (err) {
+      toast.warning(err.toString())
+    }
   }
 
   const handleCloseModal = () => {
@@ -47,20 +97,20 @@ function LoginModal({ show, handleClose }) {
 
       <Modal.Body>
         {/* Logo */}
-        <div className="text-center mb-4">
+        <div className="text-center mb-1">
           <img src={logo} alt="FoodFast Logo" className="login-logo" />
         </div>
 
         {/* Tabs cho login / register */}
         {formType !== "forgot" && (
-          <div className="login-tabs mb-4 text-center">
+          <div className="login-tabs mb-3 text-center">
             <span
               className={`fw-bold me-4 pb-2 ${formType === "login"
                 ? "border-bottom border-3 border-primary text-primary"
                 : "text-muted"
                 }`}
               role="button"
-              onClick={switchToLogin}
+              onClick={() => switchToForm("login")}
             >
               Đăng nhập
             </span>
@@ -70,7 +120,7 @@ function LoginModal({ show, handleClose }) {
                 : "text-muted"
                 }`}
               role="button"
-              onClick={switchToRegister}
+              onClick={() => switchToForm("register")}
             >
               Tạo tài khoản
             </span>
@@ -79,7 +129,7 @@ function LoginModal({ show, handleClose }) {
 
         {/* Form Đăng nhập */}
         {formType === "login" && (
-          <form onSubmit={handleLogIn}>
+          <form onSubmit={(e) => handleLogIn(e)}>
             <div className="mb-3">
               <label className="form-label">Số điện thoại</label>
               <input
@@ -88,8 +138,8 @@ function LoginModal({ show, handleClose }) {
                 placeholder="Nhập số điện thoại"
                 pattern="[0-9]{10,11}"
                 required
-                value={phone}
-                onChange={e => setPhone(e.target.value)}
+                value={login_data.phone}
+                onChange={e => setLogin({ ...login_data, phone: e.target.value })}
               />
             </div>
 
@@ -103,8 +153,8 @@ function LoginModal({ show, handleClose }) {
                 className="form-control rounded-3"
                 placeholder="Nhập mật khẩu"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={login_data.password}
+                onChange={e => setLogin({ ...login_data, password: e.target.value })}
               />
               <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
                 onClick={() => setShowPassword(!showPassword)}
@@ -122,7 +172,7 @@ function LoginModal({ show, handleClose }) {
             <div className="text-end mb-3">
               <a
                 href="#"
-                onClick={switchToForgot}
+                onClick={() => switchToForm("forgot")}
                 className="text-decoration-none small text-primary"
               >
                 Quên mật khẩu?
@@ -142,7 +192,7 @@ function LoginModal({ show, handleClose }) {
 
         {/* Form Quên mật khẩu */}
         {formType === "forgot" && (
-          <form>
+          <form onSubmit={(e) => handleResetPassword(e)}>
             <h5 className="text-center mb-3">Quên mật khẩu</h5>
             <p className="text-muted small text-center mb-3">
               Nhập số điện thoại để nhận mã khôi phục
@@ -156,6 +206,8 @@ function LoginModal({ show, handleClose }) {
                 placeholder="Nhập số điện thoại"
                 pattern="[0-9]{10,11}"
                 required
+                value={resetPsw.phone}
+                onChange={e => setResetPsw({...resetPsw, phone:e.target.value})}
               />
             </div>
 
@@ -171,7 +223,7 @@ function LoginModal({ show, handleClose }) {
             <div className="text-center">
               <a
                 href="#"
-                onClick={switchToLogin}
+                onClick={() => switchToForm("login")}
                 className="text-decoration-none small text-primary"
               >
                 ← Quay lại đăng nhập
@@ -180,41 +232,92 @@ function LoginModal({ show, handleClose }) {
           </form>
         )}
 
-        {/* Form Đăng ký */}
-        {formType === "register" && (
+        {/* Form nhập mã OTP */}
+        {formType === "otp" && (
+          <form onSubmit={(e) => handleVerifyOTP(e)}>
+            <h5 className="text-center mb-3">Xác minh OTP</h5>
+            <p className="text-muted small text-center mb-3">
+              Nhập mã OTP đã gửi đến số điện thoại {resetPsw.phone}
+            </p>
+
+            <div className="mb-3">
+              <label className="form-label">Mã OTP</label>
+              <input
+                type="text"
+                className="form-control rounded-3"
+                placeholder="Nhập mã OTP"
+                value={resetPsw.otp}
+                onChange={e => setResetPsw({...resetPsw, otp:e.target.value})}
+                required
+              />
+            </div>
+
+            <Button type="submit" className="w-100 fw-bold text-white" style={{ background: "#ff6600", border: "none" }}>
+              XÁC MINH
+            </Button>
+          </form>
+        )}
+
+        {/* Form đặt lại mật khẩu */}
+        {formType === "reset" && (
           <form>
-            <div className="row mb-3">
-              <div className="col">
-                <label className="form-label">Họ</label>
-                <input
-                  type="text"
-                  className="form-control rounded-3"
-                  placeholder="Nhập họ"
-                  required
-                />
-              </div>
-              <div className="col">
-                <label className="form-label">Tên</label>
-                <input
-                  type="text"
-                  className="form-control rounded-3"
-                  placeholder="Nhập tên"
-                  required
-                />
-              </div>
+            <h5 className="text-center mb-3">Đặt lại mật khẩu</h5>
+
+            <div className="mb-3">
+              <label className="form-label">Mật khẩu mới</label>
+              <input
+                type="password"
+                className="form-control rounded-3"
+                placeholder="Nhập mật khẩu mới"
+                
+                required
+              />
             </div>
 
             <div className="mb-3">
+              <label className="form-label">Xác nhận mật khẩu</label>
+              <input
+                type="password"
+                className="form-control rounded-3"
+                placeholder="Nhập lại mật khẩu"
+                required
+              />
+            </div>
+
+            <Button type="submit" className="w-100 fw-bold text-white" style={{ background: "#ff6600", border: "none" }}>
+              ĐẶT LẠI MẬT KHẨU
+            </Button>
+          </form>
+        )}
+
+        {/* Form Đăng ký */}
+        {formType === "register" && (
+          <form onSubmit={(e) => handleRegister(e)}>
+            <div className="mb-1">
+              <label className="form-label">Họ tên</label>
+              <input
+                type="text"
+                className="form-control rounded-3"
+                placeholder="Nhập họ tên"
+                required
+                value={register_info.userName}
+                onChange={e => setRegister({ ...register_info, userName: e.target.value })}
+              />
+            </div>
+
+            <div className="mb-1">
               <label className="form-label">Email</label>
               <input
                 type="email"
                 className="form-control rounded-3"
                 placeholder="Nhập email"
                 required
+                value={register_info.email}
+                onChange={e => setRegister({ ...register_info, email: e.target.value })}
               />
             </div>
 
-            <div className="mb-3">
+            <div className="mb-1">
               <label className="form-label">Số điện thoại</label>
               <input
                 type="tel"
@@ -222,26 +325,44 @@ function LoginModal({ show, handleClose }) {
                 placeholder="Nhập số điện thoại"
                 pattern="[0-9]{10,11}"
                 required
+                value={register_info.phone}
+                onChange={e => setRegister({ ...register_info, phone: e.target.value })}
               />
             </div>
 
-            <div className="mb-3">
+            <div className="mb-1">
+              <label className="form-label">Địa chỉ</label>
+              <input
+                type="text"
+                className="form-control rounded-3"
+                placeholder="Nhập địa chỉ"
+                required
+                value={register_info.address}
+                onChange={e => setRegister({ ...register_info, address: e.target.value })}
+              />
+            </div>
+
+            <div className="mb-1">
               <label className="form-label">Mật khẩu</label>
               <input
                 type="password"
                 className="form-control rounded-3"
                 placeholder="Nhập mật khẩu"
                 required
+                value={register_info.password}
+                onChange={e => setRegister({ ...register_info, password: e.target.value })}
               />
             </div>
 
-            <div className="mb-4">
+            <div className="mb-3">
               <label className="form-label">Xác nhận mật khẩu</label>
               <input
                 type="password"
                 className="form-control rounded-3"
                 placeholder="Nhập lại mật khẩu"
                 required
+                value={register_info.confirmPassword}
+                onChange={e => setRegister({ ...register_info, confirmPassword: e.target.value })}
               />
             </div>
 
