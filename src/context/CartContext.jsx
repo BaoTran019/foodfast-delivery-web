@@ -25,7 +25,6 @@ function CartProvider({ children }) {
         setCart(data || { cartItems: [], totalPrice: 0 });
       } catch (err) {
         console.error("❌ Lỗi load cart:", err);
-        toast.error(err.message);
       } finally {
         setLoading(false);
       }

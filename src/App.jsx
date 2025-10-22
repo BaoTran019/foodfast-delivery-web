@@ -4,6 +4,7 @@ import Home from "./Views/Home/Home";
 import Menu from './Menu/Menu';
 import CartPage from './Cart/CartPage';
 import CheckoutPage from './Checkout/CheckoutPage';
+import ProfilePage from './Profile/ProfilePage';
 import Footer from "./components/Footer/Footer";
 import MyNavbar from "./components/Navbar/MyNavbar";
 import Product_Card from './Menu/components/Product_Card/Product_Card';
@@ -21,7 +22,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/menu" element={<Menu />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path='/checkout' element={<CheckoutPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
       <ToastContainer />
       <Footer />

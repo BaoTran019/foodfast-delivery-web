@@ -82,6 +82,10 @@
   border-radius: 6px;
   cursor: pointer;
 }
+.qty-controls button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 .cart-subtotal {
   font-weight: bold;

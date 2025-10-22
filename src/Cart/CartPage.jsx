@@ -40,6 +40,9 @@ function CartPage() {
   }
 
   const handleQty = (id, delta) => {
+    const item = cart.cartItems.find(i => i.productId === id)
+    if(!item) return;
+    if(item.quantity===1 && delta===-1) return;
     updateQuantity(id, delta)
   }
 
@@ -66,7 +69,8 @@ function CartPage() {
                   <h4 style={{color:'#ff8c09'}}>{item.productName}</h4>
                   <p>{new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(item.price)}</p>
                   <div className="qty-controls">
-                    <button onClick={() => handleQty(item.productId, -1)}>-</button>
+                    <button onClick={() => handleQty(item.productId, -1)}
+                      disabled={item.quantity===1}>-</button>
                     <span>{item.quantity}</span>
                     <button onClick={() => handleQty(item.productId, 1)}>+</button>
                   </div>
