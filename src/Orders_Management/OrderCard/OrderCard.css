@@ -1,0 +1,42 @@
+.order-card {
+    margin-block: 20px;
+    margin-inline: auto;
+    border-radius: 15px;
+    width: 90%;
+    color: grey;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.order-card.new-orders {
+    border-left: 5px solid rgb(218, 0, 218);
+}
+
+.order-card.in-progress {
+    border-left: 5px solid rgb(242, 145, 0);
+}
+
+.order-card.ready {
+    border-left: 5px solid rgb(70, 133, 231);
+}
+
+.order-card.completed {
+    border-left: 5px solid rgb(0, 187, 12);
+}
+
+
+.new-orders-btn {
+    background-color: rgb(218, 0, 218);
+    border: 1px solid rgb(218, 0, 218);
+}
+
+.in-progress-btn {
+    background-color: rgb(242, 145, 0); /*rgb(207, 124, 0)*/
+    border: 1px solid rgb(242, 145, 0);
+}
+
+.ready-btn {
+    background-color: rgb(70, 133, 231); /*rgb(0, 75, 187)*/
+    border: 1px solid rgb(70, 133, 231);
+}

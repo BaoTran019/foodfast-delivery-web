@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./MyNavbar.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -9,6 +9,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import ThemeToggle from '../ThemeToggle/ThemeToggle';
 import logo from "../../assets/logo/logo.png";
 import { AuthContext } from '../../context/AuthenticationContext';
+import { toast } from 'react-toastify';
 
 // Import các modal
 import LoginModal from "../../Login/LoginModal/LoginModal";
@@ -25,6 +26,27 @@ function MyNavbar({ darkMode, setDarkMode }) {
 
   const handleUserIconClick = () => {
     setShowLogin(true)
+  }
+
+  const navigate = useNavigate()
+
+  const handleManageOrder = () => {
+    if (auth.userId !== '') {
+      navigate('/orders')
+      window.scrollTo(0, 0)
+    }
+    else {
+      toast.warning('Hãy đăng nhập vào tài khoản của bạn trước nhé!')
+    }
+  }
+  const handleOpenCartPage = () => {
+    if (auth.userId !== '') {
+      navigate('/cart')
+      window.scrollTo(0, 0)
+    }
+    else {
+      toast.warning('Hãy đăng nhập vào tài khoản để có thể đặt hàng nhé!')
+    }
   }
 
   return (
@@ -45,7 +67,7 @@ function MyNavbar({ darkMode, setDarkMode }) {
             <Nav className='main-menu me-auto ms-auto'>
               <Nav.Link as={NavLink} to="/" onClick={() => window.scrollTo(0, 0)}>Trang chủ</Nav.Link>
               <Nav.Link as={NavLink} to="/menu" onClick={() => window.scrollTo(0, 0)}>Thực đơn</Nav.Link>
-              <Nav.Link as={NavLink} to="/profile" onClick={() => window.scrollTo(0, 0)}>Đơn hàng của bạn</Nav.Link>
+              <Nav.Link onClick={() => handleManageOrder()}>Đơn hàng của bạn</Nav.Link>
             </Nav>
 
             {/* Menu user (login, cart, theme) */}
@@ -64,7 +86,7 @@ function MyNavbar({ darkMode, setDarkMode }) {
 
 
               {/*Cart Button */}
-              <Nav.Link as={NavLink} to='/cart' onClick={() => window.scrollTo(0, 0)}>
+              <Nav.Link onClick={() => handleOpenCartPage()}>
                 <i className="bi bi-cart"></i>
               </Nav.Link>
 
