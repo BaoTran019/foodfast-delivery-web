@@ -11,6 +11,7 @@ const OrderProvider = ({ children }) => {
     const userId = user.id
 
     const [orders, setOrders] = useState([])
+    const [isAddOrder, setIsAddOrder] = useState(false)
 
     useEffect(() => {
         const loadOrders = async () => {
@@ -23,7 +24,7 @@ const OrderProvider = ({ children }) => {
             }
         }
         loadOrders();
-    }, [userId])
+    }, [userId, isAddOrder])
 
     const getOrderItem = (orderId) => {
         const order = orders.find(order => order.orderId === orderId)
@@ -34,6 +35,7 @@ const OrderProvider = ({ children }) => {
         try {
             const orderData = await addOrderAPI(userId, initial_order)
             setOrders(prev => [...prev, orderData])
+            setIsAddOrder(!isAddOrder)
             return orderData
         } catch (err) {
             console.error(err)
