@@ -13,13 +13,16 @@ import My_Product_Card from '../Product_Card/My_Product_Card';
 
 function FoodSwiper({ category }) {
 
-  const { food_list } = useContext(StoreContext)
+  const { onSaleProduct } = useContext(StoreContext)
+  const food_list = onSaleProduct()
 
-  const filteredList = food_list.filter(food => food.category === category);
+  let filteredList = []
+
+  if (category===0) {filteredList = food_list}
+  else {filteredList = food_list.filter(food => food.category == category)};
 
   console.log("Food list:", food_list);
   console.log("Category:", category);
-  console.log("Filtered:", filteredList);
 
   return (
     <div className='container'>

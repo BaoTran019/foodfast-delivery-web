@@ -21,7 +21,7 @@ function UserProvider({ children }) {
             if(!userId) return setLoading(false);
             try{
                 const data = await getUserAPI(userId)
-                setUser({id: data.id, name: data.name, password: data.password, email: data.email, 
+                setUser({id: data.userId, name: data.fullName, password: data.password, email: data.email, 
                     address: data.address, phone: data.phone, role: data.role})
             }
             catch(err){

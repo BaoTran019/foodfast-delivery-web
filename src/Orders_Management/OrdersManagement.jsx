@@ -5,12 +5,12 @@ import { useContext } from "react"
 
 function OrdersManagement() {
 
-    const { filterOrders } = useContext(OrderContext)
-    const orders = filterOrders()
+    const { orders } = useContext(OrderContext)
+    console.log(orders)
 
     return (
-        <Container style={{paddingBlock:'20vh'}}>
-            <div style={{background:'white', borderRadius:'15px', padding:'25px'}}>
+        <Container style={{paddingBlock:'18vh'}}>
+            <div style={{background:'white', borderRadius:'15px', padding:'20px'}}>
             {orders.map((order) => (
                 <OrderCard order={order}></OrderCard>
             ))}

@@ -22,6 +22,13 @@ function CheckoutPage() {
     customer: user.name, phone: user.phone,
     address: user.address, total: total, payment_method: ''
   })
+  const [initial_order, setInitialOrder] = useState({
+    recipientName: user.name,
+    recipientPhone: user.phone,
+    shipping_address: user.address,
+    payment_method: 'COD',
+    total: total
+  })
 
   const navigate = useNavigate()
 
@@ -35,15 +42,21 @@ function CheckoutPage() {
     return <Navigate to="/menu" replace />; // chuyển hướng về trang menu
   }
 
-  const handleAddOrder = (e) => {
+  const handleAddOrder = async (e) => {
     e.preventDefault();
-    addOrder(init_order)
-    removeAllItems()
-    toast.success("Đặt hàng thành công")
-    navigate('/menu')
+    try {
+      const orderData = await addOrder(user.id, initial_order)
+      await removeAllItems()
+      toast.success("Đặt hàng thành công")
+      navigate('/menu')
+    }
+    catch (err) {
+      toast.warning("Lỗi")
+      throw new Error(err)
+    }
   }
 
-  console.log(init_order)
+  console.log('initial order', initial_order)
 
   return (
     <div style={{ paddingBlock: '16vh', marginInline: 'auto', width: '100%' }}>
@@ -63,23 +76,23 @@ function CheckoutPage() {
                     Họ và tên <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span>
                   </Form.Label>
                   <Form.Control className='form-control' type='text' placeholder='Nhập họ và tên người nhận'
-                    value={init_order.customer} required 
-                    onChange={(e) => setInitOrder({ ...init_order, customer: e.target.value})}/>
+                    value={initial_order.recipientName} required
+                    onChange={(e) => setInitialOrder({ ...initial_order, recipientName: e.target.value })} />
 
                   <Form.Label>
                     Số điện thoại <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span>
                   </Form.Label>
                   <Form.Control className='form-control' type='tel'
                     placeholder='Nhập số điện thoại người nhận' pattern="^0[0-9]{9}$"
-                    value={init_order.phone} required 
-                    onChange={(e) => setInitOrder({ ...init_order, phone: e.target.value})}/>
+                    value={initial_order.recipientPhone} required
+                    onChange={(e) => setInitialOrder({ ...initial_order, recipientPhone: e.target.value })} />
 
                   <Form.Label>
                     Địa chỉ nhận hàng <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span>
                   </Form.Label>
                   <Form.Control className='form-control' type='text' placeholder='Nhập địa chỉ nhận hàng'
-                    value={init_order.address} required 
-                    onChange={(e) => setInitOrder({ ...init_order, address: e.target.value})}/>
+                    value={initial_order.shipping_address} required
+                    onChange={(e) => setInitialOrder({ ...initial_order, shipping_address: e.target.value })} />
 
                   <Form.Label>
                     Ghi chú
@@ -95,17 +108,17 @@ function CheckoutPage() {
                     Phương thức thanh toán
                   </div>
                   <div style={{ marginBlock: '1em', display: 'flex', gap: '1em', alignItems: 'center' }}>
-                    <Form.Check type='radio' name="paymentMethod" id="payment-cod" 
-                    required
-                    value={"COD"}
-                    onChange={(e) => setInitOrder({ ...init_order, payment_method:e.target.value})}/>
+                    <Form.Check type='radio' name="paymentMethod" id="payment-cod"
+                      required
+                      value={"COD"}
+                      onChange={(e) => setInitialOrder({ ...initial_order, payment_method: e.target.value })} />
                     <Form.Label className='checkout-method-label'><img src={cash} style={{ height: '40px', marginRight: '0.8em' }}></img>Tiền mặt</Form.Label>
                   </div>
                   <div style={{ display: 'flex', gap: '1em', alignItems: 'center' }}>
-                    <Form.Check type='radio' name="paymentMethod" id="payment-online" 
-                    required
-                    value={"Online payment"}
-                    onChange={(e) => setInitOrder({ ...init_order, payment_method:e.target.value})}/>
+                    <Form.Check type='radio' name="paymentMethod" id="payment-online"
+                      required
+                      value={"VNPAY"}
+                      onChange={(e) => setInitialOrder({ ...initial_order, payment_method: e.target.value })} />
                     <Form.Label className='checkout-method-label'><img src={vnpayLogo} style={{ height: '40px', marginRight: '0.8em' }}></img>VNPay</Form.Label>
                   </div>
                 </Form.Group>

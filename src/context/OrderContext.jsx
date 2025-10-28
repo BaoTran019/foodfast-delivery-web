@@ -1,6 +1,5 @@
-import { createContext, useState, useContext } from "react";
-import { initial_orders } from "../assets/mock_data/orders";
-import { order_items } from "../assets/mock_data/order_items";
+import { createContext, useState, useContext, useEffect } from "react";
+import { fetchOrders, addOrder as addOrderAPI } from "../api/orderAPI";
 
 import { UserContext } from "./UserContext";
 
@@ -10,33 +9,43 @@ const OrderProvider = ({ children }) => {
 
     const { user } = useContext(UserContext)
     const userId = user.id
-    const userName = user.Name
 
-    const [orders, setOrders] = useState(initial_orders)
-    const [orderItem, setOrderItem] = useState(order_items)
+    const [orders, setOrders] = useState([])
 
-    const filterOrders = () => {
-        return initial_orders.filter(order => order.userId === userId);
-    };
+    useEffect(() => {
+        const loadOrders = async () => {
+            try {
+                const data = await fetchOrders()
+                setOrders(data.filter(data => data.userId === userId))
+            }
+            catch (err) {
+                throw new Error(err)
+            }
+        }
+        loadOrders();
+    }, [userId])
 
     const getOrderItem = (orderId) => {
-        return orderItem.filter(item => item.orderId === orderId);
+        const order = orders.find(order => order.orderId === orderId)
+        return order ? order.orderItems : []
     }
 
-    const addOrder = (newOrder) => {
-        const nextId = orders.length > 0
-            ? Math.max(...orders.map(o => o.orderId)) + 1
-            : 1;
+    const addOrder = async (userId, initial_order) => {
+        try {
+            const orderData = await addOrderAPI(userId, initial_order)
+            setOrders(prev => [...prev, orderData])
+            return orderData
+        } catch (err) {
+            console.error(err)
+            throw new Error(err || 'Không thể tạo order')
+        }
+    }
 
-        const orderWithId = {
-            ...newOrder, userId: userId, 
-            orderId: nextId, status: 'new-orders', date: Date.now()
-        };
-        setOrders(prev => [...prev, orderWithId]);
-    };
+    console.log('userId for orders: ', userId)
+    console.log('orders: ', orders)
 
     return (
-        <OrderContext.Provider value={{ filterOrders, getOrderItem, addOrder }}>
+        <OrderContext.Provider value={{ orders, getOrderItem, addOrder }}>
             {children}
         </OrderContext.Provider>
     )

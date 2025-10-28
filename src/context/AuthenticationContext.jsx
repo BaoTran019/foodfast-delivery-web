@@ -1,4 +1,4 @@
-import { Children, createContext, useState } from "react";
+import { Children, createContext, useState, useEffect } from "react";
 import { logIn as logInAPI } from "../api/authenticationAPI";
 
 export const AuthContext = createContext()
@@ -6,10 +6,22 @@ export const AuthContext = createContext()
 function AuthProvider({ children }) {
     const [auth, setAuth] = useState({ userId: '', token: '' })
 
+    useEffect(() => {
+        const storedAuth = localStorage.getItem("auth");
+        if (storedAuth) {
+            setAuth(JSON.parse(storedAuth));
+        }
+    }, []);
+
     const logIn = async (phone, password) => {
         try {
             const data = await logInAPI(phone, password)
             setAuth({ userId: data.userId, token: data.token })
+
+            localStorage.setItem(
+                "auth",
+                JSON.stringify({ userId: data.userId, token: data.token })
+            )
         }
         catch (err) {
             throw err;
