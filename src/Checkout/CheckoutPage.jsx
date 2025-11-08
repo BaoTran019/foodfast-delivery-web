@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from 'react'
-import { NavLink, Navigate } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react'
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import { toast } from "react-toastify";
@@ -7,12 +7,30 @@ import CartItem from './components/CartItem/CartItem';
 import './CheckoutPage.css'
 import vnpayLogo from '../assets/checkout/vnpay.jpg'
 import cash from '../assets/checkout/money.png'
+import { OrderContext } from '../context/OrderContext';
+import { UserContext } from '../context/UserContext';
 
 function CheckoutPage() {
-  const { cart } = useContext(CartContext);
+  const { cart, removeAllItems } = useContext(CartContext);
+  const { addOrder } = useContext(OrderContext)
+  const { user } = useContext(UserContext)
 
   // Get Total
   const total = cart.cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const [init_order, setInitOrder] = useState({
+    customer: user.name, phone: user.phone,
+    address: user.address, total: total, payment_method: ''
+  })
+  const [initial_order, setInitialOrder] = useState({
+    recipientName: user.name,
+    recipientPhone: user.phone,
+    shipping_address: user.address,
+    payment_method: 'COD',
+    total: total
+  })
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (cart.cartItems.length === 0) {
@@ -24,13 +42,29 @@ function CheckoutPage() {
     return <Navigate to="/menu" replace />; // chuyển hướng về trang menu
   }
 
+  const handleAddOrder = async (e) => {
+    e.preventDefault();
+    try {
+      const orderData = await addOrder(user.id, initial_order)
+      await removeAllItems()
+      toast.success("Đặt hàng thành công")
+      navigate('/menu')
+    }
+    catch (err) {
+      toast.warning("Lỗi")
+      throw new Error(err)
+    }
+  }
+
+  console.log('initial order', initial_order)
+
   return (
     <div style={{ paddingBlock: '16vh', marginInline: 'auto', width: '100%' }}>
       <Row style={{ paddingRight: '0' }}>
 
         {/* CHECKOUT INFORMATION */}
         <Col md={8}>
-          <Form className='checkout-form'>
+          <Form className='checkout-form' onSubmit={(e) => handleAddOrder(e)}>
             <Row>
               <Col md={6} xs={12} className="mb-3">
                 {/*Customer information */}
@@ -41,18 +75,24 @@ function CheckoutPage() {
                   <Form.Label>
                     Họ và tên <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span>
                   </Form.Label>
-                  <Form.Control className='form-control' type='text' placeholder='Nhập họ và tên người nhận' required />
+                  <Form.Control className='form-control' type='text' placeholder='Nhập họ và tên người nhận'
+                    value={initial_order.recipientName} required
+                    onChange={(e) => setInitialOrder({ ...initial_order, recipientName: e.target.value })} />
 
                   <Form.Label>
                     Số điện thoại <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span>
                   </Form.Label>
-                  <Form.Control className='form-control' type='tel' 
-                    placeholder='Nhập số điện thoại người nhận' required pattern="^0[0-9]{9}$"/>
+                  <Form.Control className='form-control' type='tel'
+                    placeholder='Nhập số điện thoại người nhận' pattern="^0[0-9]{9}$"
+                    value={initial_order.recipientPhone} required
+                    onChange={(e) => setInitialOrder({ ...initial_order, recipientPhone: e.target.value })} />
 
                   <Form.Label>
                     Địa chỉ nhận hàng <span style={{ color: 'red', fontSize: 'smaller' }}>(Bắt buộc)</span>
                   </Form.Label>
-                  <Form.Control className='form-control' type='text' placeholder='Nhập địa chỉ nhận hàng' required />
+                  <Form.Control className='form-control' type='text' placeholder='Nhập địa chỉ nhận hàng'
+                    value={initial_order.shipping_address} required
+                    onChange={(e) => setInitialOrder({ ...initial_order, shipping_address: e.target.value })} />
 
                   <Form.Label>
                     Ghi chú
@@ -68,11 +108,17 @@ function CheckoutPage() {
                     Phương thức thanh toán
                   </div>
                   <div style={{ marginBlock: '1em', display: 'flex', gap: '1em', alignItems: 'center' }}>
-                    <Form.Check type='radio' name="paymentMethod" id="payment-cod" />
+                    <Form.Check type='radio' name="paymentMethod" id="payment-cod"
+                      required
+                      value={"COD"}
+                      onChange={(e) => setInitialOrder({ ...initial_order, payment_method: e.target.value })} />
                     <Form.Label className='checkout-method-label'><img src={cash} style={{ height: '40px', marginRight: '0.8em' }}></img>Tiền mặt</Form.Label>
                   </div>
                   <div style={{ display: 'flex', gap: '1em', alignItems: 'center' }}>
-                    <Form.Check type='radio' name="paymentMethod" id="payment-online" />
+                    <Form.Check type='radio' name="paymentMethod" id="payment-online"
+                      required
+                      value={"VNPAY"}
+                      onChange={(e) => setInitialOrder({ ...initial_order, payment_method: e.target.value })} />
                     <Form.Label className='checkout-method-label'><img src={vnpayLogo} style={{ height: '40px', marginRight: '0.8em' }}></img>VNPay</Form.Label>
                   </div>
                 </Form.Group>
@@ -88,7 +134,7 @@ function CheckoutPage() {
         </Col>
 
         {/*CART LIST FOR CHECKOUT*/}
-        <Col className='checkout-form' style={{padding: '1em', borderRadius: '30px' }}>
+        <Col className='checkout-form' style={{ padding: '1em', borderRadius: '30px' }}>
           <div className='checkout-form'>
             <p style={{ fontSize: 'larger', borderBottom: '1px solid grey', paddingBottom: '1em' }}>Tổng cộng: {" "}
               <span style={{ fontSize: 'x-large', fontWeight: 'bold', color: '#ff8c09' }}>
@@ -97,7 +143,7 @@ function CheckoutPage() {
             </p>
 
             {cart.cartItems.map((food) => (
-              <CartItem item={food}></CartItem>
+              <CartItem key={food.id} item={food}></CartItem>
             ))}
           </div>
         </Col>

@@ -19,7 +19,7 @@ export default function Home() {
         {/** Home page content */}
         <div className='home-content'>
           <h1 className='content-title'>Hãy lựa chọn món bạn thích nhé !</h1>
-          <FoodSwiper category='Fried_Chicken'></FoodSwiper>
+          <FoodSwiper category={0}></FoodSwiper>
           <Button
            as={NavLink} to='/menu'
            onClick={() => window.scrollTo(0, 0)}

@@ -7,6 +7,7 @@ import './ProductModal.css'
 import { CartContext } from '../../../context/CartContext';
 import { toast, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from '../../../context/AuthenticationContext';
 
 /* Notify Message */
 const notifyMessage = (foodName, quantity) => (
@@ -17,7 +18,7 @@ const notifyMessage = (foodName, quantity) => (
         <Button as={NavLink} to="/cart"
             style={{ marginTop: '0.7rem' }}
             onClick={() => window.scrollTo(0, 0)}
-            >Đến giỏ hảng</Button>
+        >Đến giỏ hảng</Button>
     </div>
 );
 
@@ -39,14 +40,20 @@ const addToCartNotify = (food, quantity) => {
 
 function ProductModal({ show, handleCloseModal, food }) {
 
+    const { auth } = useContext(AuthContext)
+
     const [quantity, setQuantity] = useState(1); // default quantity = 1
     const { addToCart } = useContext(CartContext);
 
     const handleAdd = async () => {
-    addToCart(food, quantity)
-    addToCartNotify(food, quantity)
-  };
-
+        if (auth.userId !== '') {
+            addToCart(food, quantity)
+            addToCartNotify(food, quantity)
+        }
+        else {
+            toast.warning('Hãy đăng nhập vào tài khoản để có thể đặt hàng nhé!')
+        }
+    };
 
     // to reset quantity to 1 when closing modal
     useEffect(() => {

@@ -5,6 +5,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { AuthContext } from "../context/AuthenticationContext";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
+import { OrderContext } from "../context/OrderContext";
 import './ProfilePage.css'
 import avatar from '../assets/avatar/chicken_avatar.jfif'
 
@@ -13,6 +14,9 @@ function ProfilePage() {
     const { user } = useContext(UserContext)
     const { logOut } = useContext(AuthContext)
     const { removeAllItems } = useContext(CartContext)
+    const { orders } = useContext(OrderContext)
+
+    const completedCount = orders.filter(order => order.status === "Completed").length;
 
     const navigate = useNavigate()
 
@@ -64,7 +68,10 @@ function ProfilePage() {
                         <Button style={{ marginTop: '20px', position: 'right' }}>Chỉnh sửa thông tin</Button>
                     </Form>
                     <div style={{ marginTop: '30px', fontSize: 'xx-large', fontWeight: 'lighter' }}>
-                        Tổng số đơn hàng bạn đã đặt: <span style={{ color: '#ff6600', fontWeight: 'bold', fontSize: '3rem' }}>50</span>
+                        Tổng số đơn hàng bạn đã đặt:
+                        <span style={{ color: '#ff6600', fontWeight: 'bold', fontSize: '3rem' }}>
+                            {completedCount}
+                        </span>
                         <NavLink style={{ marginLeft: '10px', fontSize: 'large', fontWeight: 'bold', color: '#ff6600' }}>Xem chi tiết</NavLink>
                     </div>
                     <Button onClick={() => handleLogOut()}>Log out</Button>

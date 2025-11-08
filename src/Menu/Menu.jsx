@@ -25,7 +25,8 @@ function Menu() {
 
     const [category, setCategory] = useState('')
 
-    const { food_list } = useContext(StoreContext)
+    const { onSaleProduct } = useContext(StoreContext)
+    const food_list = onSaleProduct()
 
     const filters = [
         { icon: fastFoodIcon, category: "", label: "Tất cả món ăn", title: 'https://www.flaticon.com/free-icons/fast-food' },
