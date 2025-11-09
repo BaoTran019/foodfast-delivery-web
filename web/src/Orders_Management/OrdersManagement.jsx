@@ -11,7 +11,7 @@ function OrdersManagement() {
 
     return (
         <Container style={{ paddingBlock: '18vh' }}>
-            <div style={{ borderRadius: '15px', padding: '20px' }}>
+            <div>
                 {orders.length === 0 ? (
                     <div style={{ textAlign: 'center' }}>
                         <Image src={emptyOrder}
@@ -19,7 +19,7 @@ function OrdersManagement() {
                     </div>
                 ) :
                     (
-                        <div style={{background: 'white'}}>
+                        <div style={{background: 'white', borderRadius: '15px', padding: '20px'}}>
                             {orders.map((order) => (
                                 <OrderCard order={order}></OrderCard>
                             ))}
