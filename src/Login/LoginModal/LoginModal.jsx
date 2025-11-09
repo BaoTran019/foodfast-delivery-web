@@ -4,12 +4,11 @@ import "./LoginModal.css";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import logo from "../../assets/logo/logo.png";
 import { AuthContext } from "../../context/AuthenticationContext"
-import { register, resetPassword, verifyOTP } from "../../api/authenticationAPI";
 import { toast } from "react-toastify";
 
 function LoginModal({ show, handleClose }) {
 
-  const { logIn } = useContext(AuthContext)
+  const { logIn, forgotPassword, verifyOTP, resetPassword, register } = useContext(AuthContext)
   const [login_data, setLogin] = useState({
     phone: '',
     password: ''
@@ -27,6 +26,11 @@ function LoginModal({ show, handleClose }) {
   const [resetPsw, setResetPsw] = useState({
     phone: '',
     otp: ''
+  })
+
+  const [newPsw, setNewPsw] = useState({
+    new: '',
+    confirm: ''
   })
 
   const [showPassword, setShowPassword] = useState(false);
@@ -60,10 +64,10 @@ function LoginModal({ show, handleClose }) {
     }
   }
 
-  const handleResetPassword = async (e) => {
+  const handleForgotPassword = async (e) => {
     e.preventDefault()
     try {
-      await resetPassword(resetPsw.phone)
+      await forgotPassword(resetPsw.phone)
       setFormType('otp')
     } catch (err) {
       toast.warning(err.toString())
@@ -76,8 +80,21 @@ function LoginModal({ show, handleClose }) {
       await verifyOTP(resetPsw.phone, resetPsw.otp)
       setFormType('reset')
     } catch (err) {
-      toast.warning(err.toString())
+      toast.warning('Mã OTP không chính xác')
     }
+  }
+
+  const handleResetPassWord = async (e) => {
+    e.preventDefault()
+    try {
+      await resetPassword(resetPsw.phone, newPsw.confirm)
+      toast.success('Đổi mật khẩu thành công')
+      setFormType('login')
+    }
+    catch (err) {
+      toast.warning('Không thể đổi mật khẩu')
+    }
+
   }
 
   const handleCloseModal = () => {
@@ -192,7 +209,7 @@ function LoginModal({ show, handleClose }) {
 
         {/* Form Quên mật khẩu */}
         {formType === "forgot" && (
-          <form onSubmit={(e) => handleResetPassword(e)}>
+          <form onSubmit={(e) => handleForgotPassword(e)}>
             <h5 className="text-center mb-3">Quên mật khẩu</h5>
             <p className="text-muted small text-center mb-3">
               Nhập số điện thoại để nhận mã khôi phục
@@ -207,7 +224,7 @@ function LoginModal({ show, handleClose }) {
                 pattern="[0-9]{10,11}"
                 required
                 value={resetPsw.phone}
-                onChange={e => setResetPsw({...resetPsw, phone:e.target.value})}
+                onChange={e => setResetPsw({ ...resetPsw, phone: e.target.value })}
               />
             </div>
 
@@ -247,7 +264,7 @@ function LoginModal({ show, handleClose }) {
                 className="form-control rounded-3"
                 placeholder="Nhập mã OTP"
                 value={resetPsw.otp}
-                onChange={e => setResetPsw({...resetPsw, otp:e.target.value})}
+                onChange={e => setResetPsw({ ...resetPsw, otp: e.target.value })}
                 required
               />
             </div>
@@ -260,7 +277,7 @@ function LoginModal({ show, handleClose }) {
 
         {/* Form đặt lại mật khẩu */}
         {formType === "reset" && (
-          <form>
+          <form onSubmit={(e) => handleResetPassWord(e)}>
             <h5 className="text-center mb-3">Đặt lại mật khẩu</h5>
 
             <div className="mb-3">
@@ -269,7 +286,8 @@ function LoginModal({ show, handleClose }) {
                 type="password"
                 className="form-control rounded-3"
                 placeholder="Nhập mật khẩu mới"
-                
+                value={newPsw.new}
+                onChange={e => setNewPsw({ ...newPsw, new: e.target.value })}
                 required
               />
             </div>
@@ -280,6 +298,8 @@ function LoginModal({ show, handleClose }) {
                 type="password"
                 className="form-control rounded-3"
                 placeholder="Nhập lại mật khẩu"
+                value={newPsw.confirm}
+                onChange={e => setNewPsw({ ...newPsw, confirm: e.target.value })}
                 required
               />
             </div>

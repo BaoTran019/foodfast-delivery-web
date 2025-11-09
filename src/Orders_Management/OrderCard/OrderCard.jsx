@@ -11,9 +11,9 @@ function OrderCard({ order }) {
       return <h6 className={`customed-header-6 status ${order.status}`}>{order.status}</h6>
     else if (order.status === 'Processing') 
       return <h6 className={`customed-header-6 status ${order.status}`}>{order.status}</h6>
-    else if (order.status === 'z') 
+    else if (order.status === 'Delivering') 
       return <h6 className={`customed-header-6 status ${order.status}`}>{order.status}</h6>
-    else if (order.status === 'Delivered') 
+    else if (order.status === 'Completed') 
       return <h6 className={`customed-header-6 status ${order.status}`}>{order.status}</h6>
   }
 
