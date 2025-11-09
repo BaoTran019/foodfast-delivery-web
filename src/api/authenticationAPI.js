@@ -1,3 +1,4 @@
+import { address } from 'framer-motion/client'
 import config from './config.json'
 
 const { SERVER_API } = config
@@ -29,7 +30,13 @@ export const register = async (info) => {
     const res = await fetch(`${BASE_URL}/register`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(info)
+        body: JSON.stringify({
+            userName: info.userName,
+            password: info.password,
+            email: info.email, 
+            address: info.address,
+            phone: info.phone
+        })
     })
     
     if (!res.ok) {
@@ -38,7 +45,7 @@ export const register = async (info) => {
       }
 }
 
-export const resetPassword = async (forgotPhone) => {
+export const forgotPassword = async (forgotPhone) => {
     const res = await fetch(`${BASE_URL}/forgot-password`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
@@ -60,5 +67,17 @@ export const verifyOTP = async (phone, otp) => {
     if (!res.ok) {
         const errMsg = await res.text();
         throw new Error(errMsg || 'Không thể xác minh otp');
+      }
+}
+
+export const resetPassword = async (phone, newPassword) => {
+    const res = await fetch(`${BASE_URL}/reset-password`, {
+        method: 'POST',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone, newPassword })
+    })
+    if (!res.ok) {
+        const errMsg = await res.text();
+        throw new Error(errMsg || 'Không thể đổi mật khẩu');
       }
 }

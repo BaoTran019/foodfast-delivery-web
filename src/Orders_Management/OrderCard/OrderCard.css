@@ -18,11 +18,11 @@
     border-left: 5px solid rgb(242, 145, 0);
 }
 
-.order-card.ready {
+.order-card.Delivering {
     border-left: 5px solid rgb(70, 133, 231);
 }
 
-.order-card.Delivered {
+.order-card.Completed {
     border-left: 5px solid rgb(0, 187, 12);
 }
 
@@ -35,7 +35,10 @@
 .status.Processing {
     color: rgb(242, 145, 0);
 }
-.status.Delivered {
+.status.Delivering {
+    color: rgb(70, 133, 231);
+}
+.status.Completed {
     color: rgb(0, 187, 12);
 }
 
