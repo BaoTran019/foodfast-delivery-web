@@ -19,6 +19,8 @@ The interface is designed to be friendly, responsive, and optimized for both des
 
 ## 💡 Inspiration & Assets
 
+Mobile app is reused in order to demo my course project. Thanks to **sourced from [adrianhajdin](https://github.com/adrianhajdin/food_ordering)**.
+
 This project is **inspired by the Popeyes website**.  
 Some menu items are adapted from Popeyes’ offerings for demonstration purposes.  
 
