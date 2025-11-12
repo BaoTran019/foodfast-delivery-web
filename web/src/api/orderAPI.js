@@ -30,6 +30,8 @@ export const addOrder = async (userId, newOrder) => {
     })
 
     if (!res.ok) throw new Error("Không thể thêm orders");
+
+    return await res.json();
 };
 
 
