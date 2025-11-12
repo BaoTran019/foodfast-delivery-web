@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import { fetchOrders, setStatus } from '../api/orderAPI'
+import { updatePaymentStatus as PaidAPI } from '../api/paymentAPI'
 
 export const OrdersContext = createContext(null)
 
@@ -53,6 +54,17 @@ function OrdersProvider({ children }) {
         }
     }
 
+    // Update Order's payment status
+    const updatePaymentStatus = async (orderId) => {
+        try {
+            await PaidAPI(orderId)
+            await reloadOrders()
+        }
+        catch (err) {
+            console.log('Cannot update order payment status')
+        }
+    }
+
     // Get Order's items
     const getOrderItem = (orderId) => {
         const order = orders.find(order => order.orderId === orderId)
@@ -60,7 +72,7 @@ function OrdersProvider({ children }) {
     }
 
     return (
-        <OrdersContext.Provider value={{ orders, filterOrders, updateStatus, getOrderItem, filterOrdersByCustomer }}>
+        <OrdersContext.Provider value={{ orders, filterOrders, updateStatus, getOrderItem, filterOrdersByCustomer, updatePaymentStatus }}>
             {children}
         </OrdersContext.Provider>
     )

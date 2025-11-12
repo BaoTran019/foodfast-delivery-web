@@ -6,7 +6,7 @@ import OrderDetail from '../OrderItem/OrderDetail'
 
 function OrderCard({ order }) {
 
-  const { updateStatus } = useContext(OrdersContext)
+  const { updateStatus, updatePaymentStatus } = useContext(OrdersContext)
   const [open, setOpen] = useState(false)
 
   const handleUpdateStatus = () => {
@@ -15,7 +15,11 @@ function OrderCard({ order }) {
     else if (order.status === 'Delivering') updateStatus(order.orderId, 'Completed')
   }
 
-  const renderButton = () => {
+  const handleUpdatePaymentStatus = () => {
+    updatePaymentStatus(order.orderId)
+  }
+
+  const renderStatusButton = () => {
     if (order.status === 'Pending')
       return <Button className={`${order.status}-btn`} onClick={() => handleUpdateStatus()}>Accept</Button>
     else if (order.status === 'Processing')
@@ -23,6 +27,15 @@ function OrderCard({ order }) {
     else if (order.status === 'Delivering')
       return <Button className={`${order.status}-btn`} onClick={() => handleUpdateStatus()}>Complete</Button>
   }
+
+  const renderPaymentStatusButton = () => {
+    if (order.paymentStatus === 'UNPAID')
+      return <Button style={{background:'rgb(0, 187, 12)'}} onClick={() => handleUpdatePaymentStatus()}>Paid</Button>
+    else 
+      return <></>
+    
+  }
+
   const date = new Date(order.orderDate);
   const datePart = date.toLocaleDateString('vi-VN');
   const timePart = date.toLocaleTimeString('vi-VN');
@@ -40,11 +53,16 @@ function OrderCard({ order }) {
             <span className="mx-2">•</span>
             <span>{order.deliveryAddress}</span>
             <span className="mx-2">•</span>
-            <span>{order.payment_method}</span>
+            <span>{order.paymentMethod}</span>
+          </div>
+          <div>
+            <span className="mx-2">•</span>
+            <span>{order.paymentStatus}</span>
           </div>
         </div>
         <div style={{display:'flex', gap:'10px'}}>
-          {renderButton()}
+          {renderPaymentStatusButton()}
+          {renderStatusButton()}
           <Button className='show-detail-btn' onClick={() => setOpen(true)}>Xem đơn hàng</Button>
         </div>
       </div>

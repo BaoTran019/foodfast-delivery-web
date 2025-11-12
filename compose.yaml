@@ -1,0 +1,19 @@
+services:
+  
+  website:
+    build: ./web
+    ports:
+      - "5173:80"
+    networks:
+      - app-net
+
+  monitor:
+    build: ./monitor
+    ports:
+      - "5174:80"
+    networks:
+      - app-net
+
+networks:
+  app-net:
+    driver: bridge

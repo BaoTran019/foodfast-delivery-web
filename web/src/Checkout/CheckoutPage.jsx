@@ -9,6 +9,7 @@ import vnpayLogo from '../assets/checkout/vnpay.jpg'
 import cash from '../assets/checkout/money.png'
 import { OrderContext } from '../context/OrderContext';
 import { UserContext } from '../context/UserContext';
+import { VNPay } from '../api/checkoutAPI';
 
 function CheckoutPage() {
   const { cart, removeAllItems } = useContext(CartContext);
@@ -46,6 +47,28 @@ function CheckoutPage() {
     e.preventDefault();
     try {
       const orderData = await addOrder(user.id, initial_order)
+
+      // Kiểm tra phương thức thanh toán
+      if (initial_order.payment_method === "VNPAY") {
+        
+        const res = await VNPay(orderData.orderId, orderData.totalPrice)
+
+        if (!res.ok) {
+          throw new Error("Không tạo được thanh toán VNPay");
+
+        }
+
+        const result = await res.json();
+        console.log('paymentUrl: ', result.paymentUrl)
+
+        if (result && result.paymentUrl) {
+          // 🔹 Điều hướng sang trang thanh toán VNPay
+          window.location.href = result.paymentUrl;
+        } else {
+          toast.warning("Không nhận được URL thanh toán từ server");
+        }
+      }
+
       await removeAllItems()
       toast.success("Đặt hàng thành công")
       navigate('/menu')

@@ -31,6 +31,8 @@ function OrderCard({ order }) {
         <h6 className='customed-header-6' style={{ marginInline: '0.8rem' }}>•</h6>
         <h6 className='customed-header-6' style={{ fontWeight: 'lighter' }}>{order.paymentMethod}</h6>
         <h6 className='customed-header-6' style={{ marginInline: '0.8rem' }}>•</h6>
+        <h6 className='customed-header-6' style={{ fontWeight: 'lighter' }}>{order.paymentStatus}</h6>
+        <h6 className='customed-header-6' style={{ marginInline: '0.8rem' }}>•</h6>
         {renderStatus()}
       </div>
 
