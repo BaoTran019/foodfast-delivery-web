@@ -28,37 +28,7 @@ All icons used in this repository are **sourced from [Flaticon](https://www.flat
 
 ---
 
-## 🖼️ Demo Screenshots
-
-### Home page
-![Home page](./previews/homepage.png)
-#### Dark-theme Home page
-![Dark-theme Home page](./previews/dark-modehomepage.png)
-
-### Menu
-#### Menu Page
-![Menu page](./previews/menu-all.png)
-#### Fried Chickens filtering
-![Menu chickens filtering ](./previews/menu-chickens.png)
-#### Spaghetti filtering
-![Menu spaghetti filtering](./previews/menu-spaghetti.png)
-#### Drinks filtering
-![Menu drinks filtering](./previews/menu-drinks.png)
-#### Dark-theme Menu Page
-![Dark-theme Menu page](./previews/dark-mode-menu.png)
-
-### Cart
-#### Item Modal
-![Item Modal](./previews/add-item-to-cart.png)
-#### Cart page
-![Cart](./previews/cart.png)
-#### Dark-theme Cart page
-![Dark-theme Cart](./previews/dark-mode-cart.png)
-
-### Checkout
-#### Checkout page
-![Checkout page](./previews/checkout.png)
-#### Dark-theme Checkout page
-![Dark-theme Checkout page](./previews/cart.png)
+## 🖼️ A glance into our UI
+![Home page](./web/previews/homepage.png)
 
 
