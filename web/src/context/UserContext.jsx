@@ -1,6 +1,6 @@
 import { Children, createContext, useState, useContext, useEffect } from "react";
 import { AuthContext } from "./AuthenticationContext";
-import { getUser as getUserAPI, changeInfo as changeInfoAPI } from "../api/userAPI";
+import { getUser as getUserAPI, changeInfo as changeInfoAPI, changePassword as changePasswordAPI } from "../api/userAPI";
 
 export const UserContext = createContext()
 
@@ -36,7 +36,7 @@ function UserProvider({ children }) {
 
   useEffect(() => { reloadUsers() }, [userId])
 
-  const changeInfo = async (userId, info) => {
+  const changeInfo = async (info) => {
     try {
       await changeInfoAPI(userId, info)
       await reloadUsers()
@@ -46,8 +46,17 @@ function UserProvider({ children }) {
     }
   }
 
+  const changePassword = async (newPassword) => {
+    try {
+      await changePasswordAPI(userId, newPassword)
+    }
+    catch (err) {
+      console.log('Cannot change password')
+    }
+  }
+
   return (
-    <UserContext.Provider value={{ user, changeInfo }}>
+    <UserContext.Provider value={{ user, changeInfo, changePassword }}>
       {children}
     </UserContext.Provider>
   )
