@@ -46,10 +46,11 @@ function LoginModal({ show, handleClose }) {
     try {
       await logIn(login_data.phone, login_data.password)
       toast.success('Đăng nhập thành công')
+      handleClose();
     } catch (err) {
-      toast.warning('Đăng nhập thất bại')
+      toast.warning('Số điện thoại hoặc mật khẩu không đúng')
     }
-    handleClose();
+    
   }
 
   const handleRegister = async (e) => {

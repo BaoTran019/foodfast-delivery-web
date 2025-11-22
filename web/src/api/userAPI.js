@@ -12,17 +12,13 @@ export const getUser = async (userId) => {
 
 export const changeInfo = async (userId, info) => {
 
-    const auth = JSON.parse(localStorage.getItem("auth"))
-    const token = auth?.token
-
     try {
-        console.log('userId: ',userId)
-        console.log('info: ',info)
+        console.log('userId: ', userId)
+        console.log('info: ', info)
         const res = await fetch(`${BASE_URL}/change-info/${userId}`, {
             method: 'PUT',
             headers: {
-                "Content-Type": "application/json",
-                'Authorization': `Bearer ${token}`
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 fullName: info.fullName,
@@ -39,6 +35,25 @@ export const changeInfo = async (userId, info) => {
 
     catch (err) {
         console.log('Lỗi khi cập nhật thông tin:', err)
-        throw err
+        throw new Error(err)
+    }
+}
+
+export const changePassword = async (userId, newPassword) => {
+    try {
+        const res = await fetch(`${BASE_URL}/change-password/${userId}`, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ newPassword })
+        })
+        if (!res) {
+            throw new Error(`Error: ${res.status}`);
+        }
+    }
+    catch (err) {
+        console.log('Lỗi khi cập nhật thông tin:', err)
+        throw new Error(err)
     }
 }
