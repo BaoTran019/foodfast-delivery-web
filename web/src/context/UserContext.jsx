@@ -1,6 +1,7 @@
 import { Children, createContext, useState, useContext, useEffect } from "react";
 import { AuthContext } from "./AuthenticationContext";
-import { getUser as getUserAPI, changeInfo as changeInfoAPI, changePassword as changePasswordAPI } from "../api/userAPI";
+import { getUser as getUserAPI, changeInfo as changeInfoAPI } from "../api/userAPI";
+import { resetPassword } from "../api/authenticationAPI";
 
 export const UserContext = createContext()
 
@@ -46,9 +47,9 @@ function UserProvider({ children }) {
     }
   }
 
-  const changePassword = async (newPassword) => {
+  const changePassword = async (phone, newPassword) => {
     try {
-      await changePasswordAPI(userId, newPassword)
+      await resetPassword(phone, newPassword)
     }
     catch (err) {
       console.log('Cannot change password')
