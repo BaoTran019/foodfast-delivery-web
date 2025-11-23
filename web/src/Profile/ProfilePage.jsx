@@ -120,7 +120,7 @@ function ProfilePage() {
                 </Row>
             </Container>
 
-            <ChangePasswordModal show={showPwd} handleCloseModal={setShowPwd} />
+            <ChangePasswordModal show={showPwd} handleCloseModal={setShowPwd} userPhone={user.phone} />
         </>
     )
 }
